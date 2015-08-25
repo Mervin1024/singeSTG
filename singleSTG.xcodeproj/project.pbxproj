@@ -14,6 +14,9 @@
 		EEEC184A1B8C063E00D8A99D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEEC18491B8C063E00D8A99D /* Images.xcassets */; };
 		EEEC184D1B8C063E00D8A99D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC184B1B8C063E00D8A99D /* LaunchScreen.xib */; };
 		EEEC18591B8C063F00D8A99D /* singleSTGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18581B8C063F00D8A99D /* singleSTGTests.m */; };
+		EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18671B8C0ADC00D8A99D /* Bullet.m */; };
+		EEEC186C1B8C242000D8A99D /* Airframe.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC186B1B8C242000D8A99D /* Airframe.m */; };
+		EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC186E1B8C54D500D8A99D /* Barrage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,12 @@
 		EEEC18521B8C063F00D8A99D /* singleSTGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = singleSTGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEC18571B8C063F00D8A99D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEC18581B8C063F00D8A99D /* singleSTGTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = singleSTGTests.m; sourceTree = "<group>"; };
+		EEEC18661B8C0ADC00D8A99D /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Bullet/Bullet.h; sourceTree = "<group>"; };
+		EEEC18671B8C0ADC00D8A99D /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Bullet/Bullet.m; sourceTree = "<group>"; };
+		EEEC186A1B8C242000D8A99D /* Airframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Airframe.h; path = Player/Airframe.h; sourceTree = "<group>"; };
+		EEEC186B1B8C242000D8A99D /* Airframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Airframe.m; path = Player/Airframe.m; sourceTree = "<group>"; };
+		EEEC186D1B8C54D500D8A99D /* Barrage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Barrage.h; path = Barrage/Barrage.h; sourceTree = "<group>"; };
+		EEEC186E1B8C54D500D8A99D /* Barrage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Barrage.m; path = Barrage/Barrage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +90,8 @@
 		EEEC183B1B8C063E00D8A99D /* singleSTG */ = {
 			isa = PBXGroup;
 			children = (
+				EEEC18701B8C54DB00D8A99D /* Barrage */,
+				EEEC18691B8C23C800D8A99D /* Player */,
 				EEEC18401B8C063E00D8A99D /* AppDelegate.h */,
 				EEEC18411B8C063E00D8A99D /* AppDelegate.m */,
 				EEEC18431B8C063E00D8A99D /* ViewController.h */,
@@ -117,6 +128,34 @@
 				EEEC18571B8C063F00D8A99D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EEEC18651B8C076E00D8A99D /* Bullet */ = {
+			isa = PBXGroup;
+			children = (
+				EEEC18661B8C0ADC00D8A99D /* Bullet.h */,
+				EEEC18671B8C0ADC00D8A99D /* Bullet.m */,
+			);
+			name = Bullet;
+			sourceTree = "<group>";
+		};
+		EEEC18691B8C23C800D8A99D /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				EEEC186A1B8C242000D8A99D /* Airframe.h */,
+				EEEC186B1B8C242000D8A99D /* Airframe.m */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		EEEC18701B8C54DB00D8A99D /* Barrage */ = {
+			isa = PBXGroup;
+			children = (
+				EEEC186D1B8C54D500D8A99D /* Barrage.h */,
+				EEEC186E1B8C54D500D8A99D /* Barrage.m */,
+				EEEC18651B8C076E00D8A99D /* Bullet */,
+			);
+			name = Barrage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,8 +259,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */,
+				EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */,
 				EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */,
 				EEEC183F1B8C063E00D8A99D /* main.m in Sources */,
+				EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */,
+				EEEC186C1B8C242000D8A99D /* Airframe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
