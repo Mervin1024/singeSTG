@@ -9,35 +9,79 @@
 #import "Bullet.h"
 #import "Airframe.h"
 
-@interface Bullet ()
+@interface Bullet (){
 
-//*******碰撞检测**********
-//------------------------
-- (BOOL)isCollidedWithObj:(id)obj;
-//------------------------
-//******留给子类实现********
+}
 
 @end
 
 @implementation Bullet
-@synthesize moveEnable;
-- (instancetype)initWithFrame:(CGRect)frame{
-    self = [super initWithFrame:frame];
+#pragma mark - Bullet init
+
+- (instancetype)initWithCenter:(CGPoint)center bulletSource:(BulletSource)bulletSource bulletShapeType:(BulletShapeType)bulletShapeType{
+    CGRect frame;
+    UIImage *image;
+    switch (bulletShapeType) {
+        case BulletShapeTypeSmallJade:{
+            BulletSmallJade *bulletShape = [[BulletSmallJade alloc]init];
+            CGFloat diameter = bulletShape.diameter;
+            frame = CGRectMake(center.x-diameter/2, center.y-diameter/2, diameter, diameter);
+            image = bulletShape.bulletImage;
+            break;
+        }
+        case BulletShapeTypeEllipse:{
+            BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
+            CGFloat majorAxis = bulletShape.majorAxis;
+            CGFloat shortAxis = bulletShape.shortAxis;
+            frame = CGRectMake(center.x-majorAxis/2, center.y-shortAxis/2, majorAxis, shortAxis);
+            image = bulletShape.bulletImage;
+            break;
+        }
+        default:
+            break;
+    }
+    self = [super initWithFrame:frame image:image];
     if (self) {
-        moveEnable = NO;
+        _bulletShapeType = bulletShapeType;
+        _bulletSource = bulletSource;
     }
     return self;
 }
 
-- (BOOL)isCollidedWithObject:(id)object{
++ (instancetype)bulletWithCenter:(CGPoint)center bulletSource:(BulletSource)bulletSource bulletShapeType:(BulletShapeType)bulletShapeType{
+    return [[Bullet alloc]initWithCenter:center bulletSource:bulletSource bulletShapeType:bulletShapeType];
+}
+
+- (CGRect)collisionZone{
+    CGRect zone;
+    switch (self.bulletShapeType) {
+        case BulletShapeTypeSmallJade:
+            zone = self.frame;
+            break;
+        case BulletShapeTypeEllipse:{
+            BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
+            CGFloat majorAxis = bulletShape.majorAxis;
+            zone = CGRectMake(self.center.x-majorAxis/2, self.center.y-majorAxis/2, majorAxis, majorAxis);
+            break;
+        }
+        default:
+            break;
+    }
+    return zone;
+}
+
+#pragma mark - Bullet Methods
+
+- (BOOL)isCollidedWithObject:(Airframe *)object{
     if (!object) {
         return NO;
     }
-    if ([self isCollidedWithObject:object collisionZone:self.collisionZone]) { // 潜在碰撞区
+    // 潜在碰撞区
+    if ([self isCollidedWithObject:object collisionZone:self.collisionZone]) {
         if ([self isCollidedWithObj:object]) { // 两单位碰撞
             NSLog(@"碰撞");
-            if ([self.delegate respondsToSelector:@selector(bullet:didCollidedWithObject:)]) {
-                [self.delegate bullet:self didCollidedWithObject:object];
+            if ([self.delegate respondsToSelector:@selector(bullet:didCollidedWithAirframe:)]) {
+                [self.delegate bullet:self didCollidedWithAirframe:object];
             }
             return YES;
         }
@@ -56,147 +100,114 @@
 }
 
 // 碰撞区检测
-- (BOOL)isCollidedWithObject:(id)object collisionZone:(CGRect)collisionZone{
+- (BOOL)isCollidedWithObject:(Airframe *)object collisionZone:(CGRect)collisionZone{
     CGFloat x = fabs(collisionZone.origin.x+collisionZone.size.width/2-[object center].x);
     CGFloat y = fabs(collisionZone.origin.y+collisionZone.size.height/2-[object center].y);
-    if ([object isKindOfClass:[Airframe class]]) {
-        if (x <= collisionZone.size.width/2+[object diameter]/2 &&
-            y <= collisionZone.size.height/2+[object diameter]/2) {
-            return YES;
-        }
+    if (x <= collisionZone.size.width/2+object.detectionRadius &&
+        y <= collisionZone.size.height/2+object.detectionRadius) {
+        return YES;
     }
     return NO;
 }
 // 碰撞检测
-- (BOOL)isCollidedWithObj:(id)obj{
-    /**
-     
-     子类需实现该方法
-     
-     */
-    
+- (BOOL)isCollidedWithObj:(Airframe *)obj{
+    // 圆与圆
+    if (self.bulletShapeType == BulletShapeTypeSmallJade) {
+        BulletSmallJade *bulletShape = [[BulletSmallJade alloc]init];
+        CGFloat x = fabs([obj center].x - self.center.x);
+        CGFloat y = fabs([obj center].y - self.center.y);
+        CGFloat r = bulletShape.diameter/2+obj.detectionRadius;
+        CGFloat d = powf(x, 2) + powf(y, 2);
+        if (d <= powf(r, 2)) { // 两圆碰撞
+            return YES;
+        }
+        return NO;
+    // 圆与椭圆
+    }else if (self.bulletShapeType == BulletShapeTypeEllipse){
+        BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
+        CGPoint transformateCenter = [self coordinateTransformationCenter:obj.center];
+        CGFloat p = powf(transformateCenter.x, 2)/powf(bulletShape.majorAxis/2+obj.detectionRadius/2, 2) + powf(transformateCenter.y, 2)/powf(bulletShape.shortAxis/2+obj.detectionRadius/2, 2);
+        if (p <= 1) {
+            return YES;
+        }
+        return NO;
+    }
     return NO;
 }
 
 // 转换坐标系
-- (id)coordinateTransformationObject:(id)object{
+- (CGPoint)coordinateTransformationCenter:(CGPoint)center{
     /**
      将object中心点坐标转化为"以bullet中心点为中心，以长轴为X轴，短轴为Y轴的坐标系"的坐标
      
      这样，检测碰撞只需计算转换后的点坐标与"坐标原点“的位置关系
      */
     double angle = [self forwardAngle];
-    CGPoint transformate_1 = CGPointMake([object center].x-self.center.x,
-                                         self.center.y-[object center].y);
+    CGPoint transformate_1 = CGPointMake(center.x-self.center.x,
+                                         self.center.y-center.y);
     CGPoint transformate_2 = CGPointMake(sin(angle)*transformate_1.y+cos(angle)*transformate_1.x, cos(angle)*transformate_1.y-sin(angle)*transformate_1.x);
-    if ([object isKindOfClass:[Airframe class]]) {
-        return [[Airframe alloc]initWithCenter:transformate_2];
-    }
-    NSLog(@"Error Class:%@",NSStringFromClass([object class]));
-    return nil;
+    return transformate_2;
 }
 
-- (void)moveWithAngle:(double)angle velocity:(CGFloat)velocity{
-    if (!moveEnable) {
-        moveEnable = YES;;
-    }
-    self.forwardAngle = angle;
-    self.velocity = velocity;
-    [self move];
-}
+#pragma mark - Bullet Move Method
 
-- (void)move{
+- (BOOL)continueMove{
+    // 跃出屏幕，释放
     if ([self isOverScreen]) {
-        if ([self.delegate respondsToSelector:@selector(bullet:didOverScreenWithOrigin:)]) {
-            [self.delegate bullet:self didOverScreenWithOrigin:self.center];
+        if ([self.delegate respondsToSelector:@selector(bullet:didOverScreenWithCenter:)]) {
+            [self.delegate bullet:self didOverScreenWithCenter:self.center];
         }
         self.moveEnable = NO;
         [self removeFromSuperview];
+        return NO;
     }
-    if (!moveEnable) {
-        return;
+    // 碰撞检测
+    Airframe *object;
+    if ([self.delegate respondsToSelector:@selector(objectWillCollidedWithBullet:)]) {
+        object = [self.delegate objectWillCollidedWithBullet:self];
     }
-    CGPoint center = self.center;
-    center.x += cos(self.forwardAngle)*self.velocity;
-    center.y += sin(self.forwardAngle)*self.velocity;
-    [UIView animateWithDuration:0.01 animations:^{
-        self.center = center;
-    }completion:^(BOOL finished){
-        [self moveWithAngle:self.forwardAngle velocity:self.velocity];
-    }];
-    
+    if ([self isCollidedWithObject:object]) {
+        self.moveEnable = NO;
+        [self removeFromSuperview];
+        return NO;
+    }
+    return YES;
 }
 
 @end
+
+#pragma mark - BulletSmallJade
 
 @implementation BulletSmallJade
-CGFloat smallJadeDiameter = 15;
-@synthesize diameter;
+CGFloat const smallJadeDiameter = 15;
+NSString *const smallJadeImage = @"SmallJade";
 
-- (instancetype)initWithCenter:(CGPoint)center{
-    CGRect frame = CGRectMake(center.x-smallJadeDiameter/2, center.y-smallJadeDiameter/2, smallJadeDiameter, smallJadeDiameter);
-    self = [super initWithFrame:frame];
+- (instancetype)init{
+    self = [super init];
     if (self) {
-        [self setImage:[UIImage imageNamed:@"SmallJade"]];
-        diameter = smallJadeDiameter;
-        self.collisionZone = frame;
+        _diameter = smallJadeDiameter;
+        _bulletImage = [UIImage imageNamed:smallJadeImage];
     }
     return self;
-}
-
-+ (instancetype)smallJadeWithCenter:(CGPoint)center{
-    return [[BulletSmallJade alloc]initWithCenter:center];
-}
-
-- (BOOL)isCollidedWithObj:(id)obj{
-    CGFloat x = fabs([obj center].x - self.center.x);
-    CGFloat y = fabs([obj center].y - self.center.y);
-    CGFloat r = self.diameter/2+[obj diameter]/2;
-    CGFloat d = powf(x, 2) + powf(y, 2);
-    if (d <= powf(r, 2)) { // 两圆碰撞
-        return YES;
-    }
-    return NO;
 }
 
 @end
 
-@implementation BulletEllipse
-CGFloat EllipseMajorAxis = 15;
-CGFloat EllipseShortAxis = 10;
-@synthesize majorAxis,shortAxis;
+#pragma mark - BulletEllipse
 
-- (instancetype)initWithCenter:(CGPoint)center{
-    CGRect frame = CGRectMake(center.x-EllipseMajorAxis/2, center.y-EllipseShortAxis/2, EllipseMajorAxis, EllipseShortAxis);
-    self = [super initWithFrame:frame];
+@implementation BulletEllipse
+CGFloat const EllipseMajorAxis = 15;
+CGFloat const EllipseShortAxis = 10;
+NSString *const EllipseImage = @"Ellipse";
+
+- (instancetype)init{
+    self = [super init];
     if (self) {
-        [self setImage:[UIImage imageNamed:@"Ellipse"]];
-        majorAxis = EllipseMajorAxis;
-        shortAxis = EllipseShortAxis;
+        _majorAxis = EllipseMajorAxis;
+        _shortAxis = EllipseShortAxis;
+        _bulletImage = [UIImage imageNamed:EllipseImage];
     }
     return self;
-}
-
-+ (instancetype)EllipseWithCenter:(CGPoint)center{
-    return [[BulletEllipse alloc]initWithCenter:center];
-}
-
-- (void)setForwardAngle:(double)forwardAngle{
-    self.forwardAngle = forwardAngle;
-    self.transform = CGAffineTransformRotate(self.transform, forwardAngle);
-}
-
-- (CGRect)collisionZone{
-    return CGRectMake(self.center.x-majorAxis/2, self.center.y-majorAxis/2, majorAxis, majorAxis);
-}
-
-- (BOOL)isCollidedWithObj:(id)obj{
-    id object = [self coordinateTransformationObject:obj];
-    CGFloat p = powf([object center].x, 2)/powf(self.majorAxis/2+[object diameter]/2, 2) + powf([object center].y, 2)/powf(self.shortAxis/2+[object diameter]/2, 2);
-    if (p <= 1) {
-        return YES;
-    }
-    return NO;
 }
 
 @end

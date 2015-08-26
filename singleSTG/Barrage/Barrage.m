@@ -17,6 +17,7 @@
 @implementation Barrage
 @synthesize started;
 double count = 0;
+double a = 0;
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
@@ -36,7 +37,7 @@ double count = 0;
     if (!started) {
         return;
     }
-    BulletSmallJade *bullet = [BulletSmallJade smallJadeWithCenter:self.center];
+    Bullet *bullet = [Bullet bulletWithCenter:self.center bulletSource:BulletSourceEnemy bulletShapeType:BulletShapeTypeSmallJade];
     bullet.delegate = (id)superViewController;
     [self addSubview:bullet];
     [self.allBullets addObject:bullet];
@@ -46,8 +47,13 @@ double count = 0;
 
 - (void)shootBullet:(Bullet *)bullet{
     double angle = M_PI_4 + count;
-    count += M_PI/12;
-    CGFloat velocity = 3;
+    if (count <= M_PI/24) {
+        a = M_PI/24;
+    }else if (count >= M_PI/2.2){
+        a = - M_PI/24;
+    }
+    count += a;
+    CGFloat velocity = 1.5;
     [bullet moveWithAngle:angle velocity:velocity];
     [self performSelector:@selector(addBullets) withObject:nil afterDelay:0.1];
 }
