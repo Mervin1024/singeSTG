@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */; };
+		EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738911B8DA19B0060CD36 /* SportsSpirit.m */; };
+		EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389A1B8DAE1D0060CD36 /* Airframe.m */; };
+		EEE738A01B8DAE1D0060CD36 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389C1B8DAE1D0060CD36 /* Enemy.m */; };
+		EEE738A11B8DAE1D0060CD36 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389E1B8DAE1D0060CD36 /* Player.m */; };
+		EEE738A61B8DCC8E0060CD36 /* TouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738A31B8DBF750060CD36 /* TouchView.m */; };
 		EEEC183F1B8C063E00D8A99D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC183E1B8C063E00D8A99D /* main.m */; };
 		EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18411B8C063E00D8A99D /* AppDelegate.m */; };
 		EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18441B8C063E00D8A99D /* ViewController.m */; };
@@ -15,7 +21,6 @@
 		EEEC184D1B8C063E00D8A99D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC184B1B8C063E00D8A99D /* LaunchScreen.xib */; };
 		EEEC18591B8C063F00D8A99D /* singleSTGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18581B8C063F00D8A99D /* singleSTGTests.m */; };
 		EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18671B8C0ADC00D8A99D /* Bullet.m */; };
-		EEEC186C1B8C242000D8A99D /* Airframe.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC186B1B8C242000D8A99D /* Airframe.m */; };
 		EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC186E1B8C54D500D8A99D /* Barrage.m */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +35,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EEE7388A1B8D86FC0060CD36 /* FirstWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstWeek.h; path = Barrage/FirstWeek.h; sourceTree = "<group>"; };
+		EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstWeek.m; path = Barrage/FirstWeek.m; sourceTree = "<group>"; };
+		EEE738901B8DA19B0060CD36 /* SportsSpirit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportsSpirit.h; sourceTree = "<group>"; };
+		EEE738911B8DA19B0060CD36 /* SportsSpirit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportsSpirit.m; sourceTree = "<group>"; };
+		EEE738991B8DAE1D0060CD36 /* Airframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Airframe.h; path = Airframe/Airframe.h; sourceTree = "<group>"; };
+		EEE7389A1B8DAE1D0060CD36 /* Airframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Airframe.m; path = Airframe/Airframe.m; sourceTree = "<group>"; };
+		EEE7389B1B8DAE1D0060CD36 /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = Airframe/Enemy.h; sourceTree = "<group>"; };
+		EEE7389C1B8DAE1D0060CD36 /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy.m; path = Airframe/Enemy.m; sourceTree = "<group>"; };
+		EEE7389D1B8DAE1D0060CD36 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Airframe/Player.h; sourceTree = "<group>"; };
+		EEE7389E1B8DAE1D0060CD36 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Airframe/Player.m; sourceTree = "<group>"; };
+		EEE738A21B8DBF750060CD36 /* TouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchView.h; path = Airframe/TouchView.h; sourceTree = "<group>"; };
+		EEE738A31B8DBF750060CD36 /* TouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchView.m; path = Airframe/TouchView.m; sourceTree = "<group>"; };
 		EEEC18391B8C063E00D8A99D /* singleSTG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = singleSTG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEC183D1B8C063E00D8A99D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEC183E1B8C063E00D8A99D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,8 +62,6 @@
 		EEEC18581B8C063F00D8A99D /* singleSTGTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = singleSTGTests.m; sourceTree = "<group>"; };
 		EEEC18661B8C0ADC00D8A99D /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Bullet/Bullet.h; sourceTree = "<group>"; };
 		EEEC18671B8C0ADC00D8A99D /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Bullet/Bullet.m; sourceTree = "<group>"; };
-		EEEC186A1B8C242000D8A99D /* Airframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Airframe.h; path = Player/Airframe.h; sourceTree = "<group>"; };
-		EEEC186B1B8C242000D8A99D /* Airframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Airframe.m; path = Player/Airframe.m; sourceTree = "<group>"; };
 		EEEC186D1B8C54D500D8A99D /* Barrage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Barrage.h; path = Barrage/Barrage.h; sourceTree = "<group>"; };
 		EEEC186E1B8C54D500D8A99D /* Barrage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Barrage.m; path = Barrage/Barrage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,12 +105,15 @@
 		EEEC183B1B8C063E00D8A99D /* singleSTG */ = {
 			isa = PBXGroup;
 			children = (
-				EEEC18701B8C54DB00D8A99D /* Barrage */,
-				EEEC18691B8C23C800D8A99D /* Player */,
 				EEEC18401B8C063E00D8A99D /* AppDelegate.h */,
 				EEEC18411B8C063E00D8A99D /* AppDelegate.m */,
 				EEEC18431B8C063E00D8A99D /* ViewController.h */,
 				EEEC18441B8C063E00D8A99D /* ViewController.m */,
+				EEE738901B8DA19B0060CD36 /* SportsSpirit.h */,
+				EEE738911B8DA19B0060CD36 /* SportsSpirit.m */,
+				EEEC18701B8C54DB00D8A99D /* Barrage */,
+				EEEC18651B8C076E00D8A99D /* Bullet */,
+				EEEC18691B8C23C800D8A99D /* Airframe */,
 				EEEC18461B8C063E00D8A99D /* Main.storyboard */,
 				EEEC18491B8C063E00D8A99D /* Images.xcassets */,
 				EEEC184B1B8C063E00D8A99D /* LaunchScreen.xib */,
@@ -139,13 +157,19 @@
 			name = Bullet;
 			sourceTree = "<group>";
 		};
-		EEEC18691B8C23C800D8A99D /* Player */ = {
+		EEEC18691B8C23C800D8A99D /* Airframe */ = {
 			isa = PBXGroup;
 			children = (
-				EEEC186A1B8C242000D8A99D /* Airframe.h */,
-				EEEC186B1B8C242000D8A99D /* Airframe.m */,
+				EEE738991B8DAE1D0060CD36 /* Airframe.h */,
+				EEE7389A1B8DAE1D0060CD36 /* Airframe.m */,
+				EEE7389B1B8DAE1D0060CD36 /* Enemy.h */,
+				EEE7389C1B8DAE1D0060CD36 /* Enemy.m */,
+				EEE7389D1B8DAE1D0060CD36 /* Player.h */,
+				EEE7389E1B8DAE1D0060CD36 /* Player.m */,
+				EEE738A21B8DBF750060CD36 /* TouchView.h */,
+				EEE738A31B8DBF750060CD36 /* TouchView.m */,
 			);
-			name = Player;
+			name = Airframe;
 			sourceTree = "<group>";
 		};
 		EEEC18701B8C54DB00D8A99D /* Barrage */ = {
@@ -153,7 +177,8 @@
 			children = (
 				EEEC186D1B8C54D500D8A99D /* Barrage.h */,
 				EEEC186E1B8C54D500D8A99D /* Barrage.m */,
-				EEEC18651B8C076E00D8A99D /* Bullet */,
+				EEE7388A1B8D86FC0060CD36 /* FirstWeek.h */,
+				EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */,
 			);
 			name = Barrage;
 			sourceTree = "<group>";
@@ -258,12 +283,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEE738A61B8DCC8E0060CD36 /* TouchView.m in Sources */,
+				EEE738A01B8DAE1D0060CD36 /* Enemy.m in Sources */,
 				EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */,
+				EEE738A11B8DAE1D0060CD36 /* Player.m in Sources */,
 				EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */,
 				EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */,
 				EEEC183F1B8C063E00D8A99D /* main.m in Sources */,
 				EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */,
-				EEEC186C1B8C242000D8A99D /* Airframe.m in Sources */,
+				EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */,
+				EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */,
+				EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +488,7 @@
 				EEEC185E1B8C063F00D8A99D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEEC185F1B8C063F00D8A99D /* Build configuration list for PBXNativeTarget "singleSTGTests" */ = {
 			isa = XCConfigurationList;
@@ -466,6 +497,7 @@
 				EEEC18611B8C063F00D8A99D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

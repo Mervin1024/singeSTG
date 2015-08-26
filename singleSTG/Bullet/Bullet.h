@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 sh219. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SportsSpirit.h"
 
 typedef NS_ENUM(NSUInteger, BulletShapeType) {
     // 小玉
@@ -35,48 +35,55 @@ typedef NS_ENUM(NSUInteger, BulletShapeType) {
     
 };
 
-@class Bullet;
+typedef NS_ENUM(NSUInteger, BulletSource) {
+    BulletSourceEnemy,
+    BulletSourceFirendly
+};
+
+@class Bullet,Airframe;
 @protocol BulletDelegate <NSObject>
 
-- (void)bullet:(Bullet *)bullet didCollidedWithObject:(id)object; // 碰撞时方法回调
-- (void)bullet:(Bullet *)bullet didOverScreenWithOrigin:(CGPoint)origin;
+- (Airframe *)objectWillCollidedWithBullet:(Bullet *)bullet;
+// 碰撞时方法回调
+- (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object;
+// 跃出屏幕时方法回调
+- (void)bullet:(Bullet *)bullet didOverScreenWithCenter:(CGPoint)center;
 
 @end
 //--------------------------
 
 #pragma mark - Bullet
-@interface Bullet : UIImageView
+@interface Bullet : SportsSpirit
 
+@property (assign, nonatomic) BulletSource bulletSource;
+@property (assign, nonatomic) BulletShapeType bulletShapeType;
 @property (assign, nonatomic) CGRect collisionZone;  // 碰撞检测区域
-@property (assign, nonatomic) double forwardAngle;  // 单位：弧度
-@property (assign, nonatomic) CGFloat velocity;
-@property (assign, nonatomic) BOOL moveEnable;
 
-//- (BOOL)isCollidedWithObject:(id)object; // 碰撞检测
-- (void)moveWithAngle:(double)angle velocity:(CGFloat)velocity;
+- (instancetype)initWithCenter:(CGPoint)center
+                  bulletSource:(BulletSource)bulletSource
+               bulletShapeType:(BulletShapeType)bulletShapeType;
++ (instancetype)bulletWithCenter:(CGPoint)center
+                    bulletSource:(BulletSource)bulletSource
+                 bulletShapeType:(BulletShapeType)bulletShapeType;
 
 @property (weak, nonatomic) id <BulletDelegate> delegate;
 @end
 //---------------------------
 
 #pragma mark - BulletSmallJade
-@interface BulletSmallJade : Bullet
+@interface BulletSmallJade : NSObject
 
-@property (assign, nonatomic) CGFloat diameter; // 圆的直径
-
-- (instancetype)initWithCenter:(CGPoint)center;
-+ (instancetype)smallJadeWithCenter:(CGPoint)center;
+@property (assign, nonatomic, readonly) CGFloat diameter; // 圆的直径
+@property (strong, nonatomic, readonly) UIImage *bulletImage;
 
 @end
 //---------------------------
 
 #pragma mark - BulletEllipse
-@interface BulletEllipse : Bullet
+@interface BulletEllipse : NSObject
 
-@property (assign, nonatomic) CGFloat majorAxis; // 长轴 2a
-@property (assign, nonatomic) CGFloat shortAxis; // 短轴 2b
-
-- (instancetype)initWithCenter:(CGPoint)center;
-+ (instancetype)EllipseWithCenter:(CGPoint)center;
+@property (assign, nonatomic, readonly) CGFloat majorAxis; // 长轴 2a
+@property (assign, nonatomic, readonly) CGFloat shortAxis; // 短轴 2b
+@property (strong, nonatomic, readonly) UIImage *bulletImage;
 
 @end
