@@ -56,7 +56,9 @@
     [UIView animateWithDuration:0.01 animations:^{
         self.center = center;
     }completion:^(BOOL finished){
-        [self move];
+        if (finished) {
+            [self move];
+        }
     }];
     
 }

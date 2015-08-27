@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self initBarrage];
-    [self initPlayer];
+//    [self initPlayer];
     [self initButton];
     gameStart = NO;
     // Do any additional setup after loading the view, typically from a nib.
