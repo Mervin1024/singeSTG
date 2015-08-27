@@ -10,19 +10,19 @@
 #import "TouchView.h"
 
 @interface Player () <TouchViewDelegate>{
-    BOOL start;
     TouchView *touchView;
 }
 
 @end
 
 @implementation Player
-CGFloat const airframePlayerRadius = 7.5;
+CGFloat const airframePlayerRadius = 6.0;
 //NSString *const airframePlayerImageName = @"Player";
-NSString *const airframePlayerImageName = @"SmallJade";
+NSString *const airframePlayerImageName = @"Hakurei Reimu";
 
 - (instancetype)initWithCenter:(CGPoint)center superView:(UIView *)superView{
     self = [super initWithCenter:center
+                            size:CGSizeMake(23, 41)
                 detectionRadius:airframePlayerRadius
                 operationRadius:airframePlayerRadius
                           image:[UIImage imageNamed:airframePlayerImageName]];
@@ -31,6 +31,7 @@ NSString *const airframePlayerImageName = @"SmallJade";
         touchView.delegate = self;
         [superView addSubview:touchView];
 //        self.moveEnable = NO;
+        self.determine.hidden = NO;
     }
     return self;
 }
@@ -41,22 +42,22 @@ NSString *const airframePlayerImageName = @"SmallJade";
 
 - (void)startShoot{
     self.moveEnable = YES;
-    start = YES;
+    self.shooting = YES;
     [self addBullets];
 }
 
 - (void)stopShoot{
     self.moveEnable = NO;
-    start = NO;
+    self.shooting = NO;
 }
 
 - (void)addBullets{
-    if (!start) {
+    if (!self.shooting) {
         return;
     }
     for (int i = 0; i < 3; i++) {
-        CGPoint center = CGPointMake(airframePlayerRadius*2/2*(i-1)+self.center.x, self.center.y-airframePlayerRadius);
-        Bullet *bullet = [Bullet bulletWithCenter:center bulletSource:BulletSourceFirendly bulletShapeType:BulletShapeTypeSmallJade];
+        CGPoint center = CGPointMake(self.frame.size.width/2*(i-1)+self.center.x, self.frame.origin.y);
+        Bullet *bullet = [Bullet bulletWithCenter:center bulletSource:BulletSourceFirendly bulletShapeType:BulletShapeTypeEllipse];
         [touchView addSubview:bullet];
         [bullet moveWithAngle:M_PI_2*3 velocity:100];
     }

@@ -9,6 +9,8 @@
 #import "SportsSpirit.h"
 
 typedef NS_ENUM(NSUInteger, BulletShapeType) {
+    // 鬼人正邪
+    BulletShapeTypeKIJINSEIJA,
     // 小玉
     BulletShapeTypeSmallJade,
     
@@ -84,6 +86,20 @@ typedef NS_ENUM(NSUInteger, BulletSource) {
 
 @property (assign, nonatomic, readonly) CGFloat majorAxis; // 长轴 2a
 @property (assign, nonatomic, readonly) CGFloat shortAxis; // 短轴 2b
+@property (strong, nonatomic, readonly) UIImage *bulletImage;
+
+@end
+
+typedef NS_ENUM(NSInteger, BulletKIJINSEIJAType) {
+    BulletKIJINSEIJATypeMini,
+    BulletKIJINSEIJATypeNormal,
+    BulletKIJINSEIJATypeLarge
+};
+
+@interface BulletKIJINSEIJA : NSObject
+
+@property (assign, nonatomic, readonly) CGFloat longSide; // 长边
+@property (assign, nonatomic, readonly) CGFloat shortSide; // 短边
 @property (strong, nonatomic, readonly) UIImage *bulletImage;
 
 @end

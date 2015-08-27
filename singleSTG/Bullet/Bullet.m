@@ -196,8 +196,8 @@ NSString *const smallJadeImage = @"SmallJade";
 #pragma mark - BulletEllipse
 
 @implementation BulletEllipse
-CGFloat const EllipseMajorAxis = 15;
-CGFloat const EllipseShortAxis = 10;
+CGFloat const EllipseMajorAxis = 15.5;
+CGFloat const EllipseShortAxis = 10.5;
 NSString *const EllipseImage = @"Ellipse";
 
 - (instancetype)init{
@@ -206,6 +206,23 @@ NSString *const EllipseImage = @"Ellipse";
         _majorAxis = EllipseMajorAxis;
         _shortAxis = EllipseShortAxis;
         _bulletImage = [UIImage imageNamed:EllipseImage];
+    }
+    return self;
+}
+
+@end
+
+@implementation BulletKIJINSEIJA
+CGFloat const bulletLongSide = 15.5;
+CGFloat const bulletShortSide = 10.5;
+NSString *const KIJINSEIJAImage = @"KIJINSEIJA_1";
+
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        _longSide = bulletLongSide;
+        _shortSide = bulletShortSide;
+        _bulletImage = [UIImage imageNamed:KIJINSEIJAImage];
     }
     return self;
 }

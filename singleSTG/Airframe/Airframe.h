@@ -50,8 +50,9 @@
 
 @property (assign, nonatomic, readonly) CGFloat detectionRadius; // 中弹检测半径
 @property (assign, nonatomic, readonly) CGFloat operationRadius; // 体术检测半径
-
+@property (strong, nonatomic) UIImageView *determine;
 - (instancetype)initWithCenter:(CGPoint)center
+                          size:(CGSize)size
                detectionRadius:(CGFloat)detectionRadius
                operationRadius:(CGFloat)operationRadius
                          image:(UIImage *)image;

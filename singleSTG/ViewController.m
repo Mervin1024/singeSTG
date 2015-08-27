@@ -9,11 +9,14 @@
 #import "ViewController.h"
 #import "Bullet.h"
 #import "Player.h"
+#import "OperationView.h"
 
-@interface ViewController (){
+@interface ViewController () <OperationViewDelegate>{
+    OperationView *operationView;
     Barrage *barrage;
     Player *player;
     BOOL gameStart;
+    
 }
 
 @end
@@ -23,9 +26,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self initBarrage];
-//    [self initPlayer];
-    [self initButton];
+    [self initPlayer];
+//    [self initButton];
+    [self initOperationView];
+    
     gameStart = NO;
+    [self.view setBackgroundColor:[UIColor yellowColor]];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -51,6 +57,24 @@
 - (void)initPlayer{
     player = [Player playerWithCenter:CGPointMake(self.view.center.x, 400) superView:self.view];
     [self.view addSubview:player];
+}
+
+- (void)initOperationView{
+    operationView = [[OperationView alloc]initWithSuperView:self.view andViewController:self];
+    operationView.delegate = self;
+    [operationView.shotButton addTarget:self action:@selector(checkedShotButton) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)checkedShotButton{
+    if (!player.shooting) {
+        [player startShoot];
+        [operationView.shotButton setTitle:@"Shooting" forState:UIControlStateNormal];
+        player.shooting = YES;
+    }else{
+        [player stopShoot];
+        [operationView.shotButton setTitle:@"Shot" forState:UIControlStateNormal];
+        player.shooting = NO;
+    }
 }
 
 - (void)checked:(UIButton *)button{
@@ -88,4 +112,7 @@
     [barrage.allBullets removeObject:bullet];
 }
 
+- (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle{
+    NSLog(@"%f",angle);
+}
 @end
