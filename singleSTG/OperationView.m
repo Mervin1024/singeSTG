@@ -74,6 +74,7 @@ CGFloat wheelScale = 7;
         [self setTitleColor:titleColor forState:UIControlStateNormal];
         [self setBackgroundColor:backColor];
         [self setTitle:title forState:UIControlStateNormal];
+        _isChecked = NO;
         id ima = image;
         if (!ima) {
             ima = [NSNull null];

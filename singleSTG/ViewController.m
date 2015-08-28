@@ -11,15 +11,15 @@
 #import "Player.h"
 #import "OperationView.h"
 #import "OptionView.h"
+#import "Boss.h"
 
-@interface ViewController () <OperationViewDelegate>{
+@interface ViewController () <OperationViewDelegate,BulletDelegate>{
     OperationView *operationView;
-    Barrage *barrage;
     Player *player;
     OptionView *optionView;
     BOOL gameStart;
     BOOL pause;
-    
+    id enemy;
 }
 
 @end
@@ -34,7 +34,7 @@
     [self initOperationView];
     [self initOptionView];
     
-    gameStart = NO;
+    gameStart = YES;
     pause = NO;
     [self.view setBackgroundColor:[UIColor yellowColor]];
     // Do any additional setup after loading the view, typically from a nib.
@@ -46,11 +46,12 @@
 }
 
 - (void)initEnemy{
-    
+    enemy = [[Boss alloc]initWithCenter:CGPointMake(self.view.center.x, 100)];
+    [self.view addSubview:enemy];
 }
 
 - (void)initPlayer{
-    player = [Player playerWithCenter:CGPointMake(self.view.center.x, 400) superView:self.view];
+    player = [Player playerWithCenter:CGPointMake(self.view.center.x, 400) superViewController:self];
     [self.view addSubview:player];
 }
 
@@ -63,21 +64,24 @@
 }
 
 - (void)coutinue{
-    
+    gameStart = YES;
+    if (operationView.shotButton.isChecked) {
+        [player startShoot];
+    }
     [optionView disAppear];
     [operationView.pauseButton restore];
 }
 
 - (void)gameStart{
-    
-    [optionView disAppear];
-    [operationView.pauseButton restore];
+    NSLog(@"GameRestart");
+//    [optionView disAppear];
+//    [operationView.pauseButton restore];
 }
 
 - (void)gameEnd{
-    
-    [optionView disAppear];
-    [operationView.pauseButton restore];
+    NSLog(@"GameEnd");
+//    [optionView disAppear];
+//    [operationView.pauseButton restore];
 }
 
 - (void)initOperationView{
@@ -91,28 +95,32 @@
 }
 
 - (void)checkedShotButton{
-    if (!player.shooting) {
+    if (!operationView.shotButton.isChecked) {
         [player startShoot];
         [operationView.shotButton setTitle:@"Shooting" forState:UIControlStateNormal];
-        player.shooting = YES;
+        operationView.shotButton.isChecked = YES;
     }else{
         [player stopShoot];
         [operationView.shotButton restore];
-        player.shooting = NO;
+        operationView.shotButton.isChecked = NO;
     }
 }
 
 - (void)checkedSlowButton{
-    if (!player.slow) {
+    if (!operationView.slowButton.isChecked) {
         [operationView.slowButton setBackgroundColor:[UIColor yellowColor]];
         player.slow = YES;
+        operationView.slowButton.isChecked = YES;
     }else{
         [operationView.slowButton restore];
         player.slow = NO;
+        operationView.slowButton.isChecked = NO;
     }
 }
 
 - (void)checkedPauseButton{
+    gameStart = NO;
+    [player stopShoot];
     [optionView appear];
     [operationView.pauseButton setBackgroundColor:[UIColor yellowColor]];
 //    if (!pause) {
@@ -132,20 +140,27 @@
     [operationView.actionButton performSelector:@selector(restore) withObject:nil afterDelay:1];
 }
 
-- (void)checked:(UIButton *)button{
+//- (void)checked:(UIButton *)button{
+//    if (!gameStart) {
+//        NSLog(@"start");
+//        [button setTitle:@"stop" forState:UIControlStateNormal];
+//        [barrage start];
+//        [player startShoot];
+//        gameStart = YES;
+//    }else{
+//        NSLog(@"stop");
+//        [button setTitle:@"start" forState:UIControlStateNormal];
+//        [barrage stop];
+//        [player stopShoot];
+//        gameStart = NO;
+//    }
+//}
+
+- (BOOL)moveState{
     if (!gameStart) {
-        NSLog(@"start");
-        [button setTitle:@"stop" forState:UIControlStateNormal];
-        [barrage start];
-        [player startShoot];
-        gameStart = YES;
-    }else{
-        NSLog(@"stop");
-        [button setTitle:@"start" forState:UIControlStateNormal];
-        [barrage stop];
-        [player stopShoot];
-        gameStart = NO;
+        return NO;
     }
+    return YES;
 }
 
 - (id)objectWillCollidedWithBullet:(Bullet *)bullet{
@@ -154,17 +169,17 @@
             return nil;
             break;
         case BulletSourceFirendly:
-            return nil;
+            return enemy;
             break;
     }
 }
 
 - (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(id)object{
-    NSLog(@"collided");
+    
 }
 
 - (void)bullet:(Bullet *)bullet didOverScreenWithCenter:(CGPoint)center{
-    [barrage.allBullets removeObject:bullet];
+//    [barrage.allBullets removeObject:bullet];
 }
 
 - (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle{

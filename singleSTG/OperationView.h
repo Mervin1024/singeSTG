@@ -34,8 +34,8 @@
 // titleColor = blackColor  backgroundColor = orangeColor
 - (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image;
 
-
 - (void)restore;
 
 @property (copy, nonatomic) NSDictionary *restoreDic;
+@property (assign, nonatomic) BOOL isChecked;
 @end

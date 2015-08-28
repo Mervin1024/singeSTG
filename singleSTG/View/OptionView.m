@@ -104,6 +104,7 @@ CGFloat space = 15;
         cell.hidden = NO;
         CGRect frame = cell.frame;
         CGPoint origin = frame.origin;
+        origin.x += 5;
         frame.origin.x = -frame.size.width;
         cell.frame = frame;
         [self optionCell:cell setAnimationToPoint:origin afterDelay:i*0.1];
@@ -128,7 +129,9 @@ CGFloat space = 15;
         frame.origin.x = point.x;
         optionCell.frame = frame;
     }completion:^(BOOL finished){
-        
+        CGRect frame = optionCell.frame;
+        frame.origin.x -= 5;
+        optionCell.frame = frame;
     }];
 }
 

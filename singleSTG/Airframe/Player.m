@@ -11,6 +11,7 @@
 
 @interface Player () <TouchViewDelegate>{
     TouchView *touchView;
+    id superController;
 }
 
 @end
@@ -20,16 +21,17 @@ CGFloat const airframePlayerRadius = 6.0;
 //NSString *const airframePlayerImageName = @"Player";
 NSString *const airframePlayerImageName = @"Hakurei Reimu";
 
-- (instancetype)initWithCenter:(CGPoint)center superView:(UIView *)superView{
+- (instancetype)initWithCenter:(CGPoint)center superViewController:(UIViewController *)superViewController{
     self = [super initWithCenter:center
                             size:CGSizeMake(23, 41)
                 detectionRadius:airframePlayerRadius
                 operationRadius:airframePlayerRadius
                           image:[UIImage imageNamed:airframePlayerImageName]];
     if (self) {
-        touchView = [[TouchView alloc]initWithFrame:superView.frame];
+        superController = superViewController;
+        touchView = [[TouchView alloc]initWithFrame:superViewController.view.frame];
         touchView.delegate = self;
-        [superView addSubview:touchView];
+        [superViewController.view addSubview:touchView];
 //        self.moveEnable = NO;
 //        self.determine.hidden = NO;
         _slow = NO;
@@ -38,8 +40,8 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
     return self;
 }
 
-+ (instancetype)playerWithCenter:(CGPoint)center superView:(UIView *)superView{
-    return [[Player alloc]initWithCenter:center superView:superView];
++ (instancetype)playerWithCenter:(CGPoint)center superViewController:(UIViewController *)superViewController{
+    return [[Player alloc]initWithCenter:center superViewController:superViewController];
 }
 
 - (void)setSlow:(BOOL)slow{
@@ -49,13 +51,13 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
 
 - (void)startShoot{
     self.moveEnable = YES;
-    self.shooting = YES;
+    _shooting = YES;
     [self addBullets];
 }
 
 - (void)stopShoot{
     self.moveEnable = NO;
-    self.shooting = NO;
+    _shooting = NO;
 }
 
 - (void)addBullets{
@@ -67,6 +69,7 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
         CGPoint center = CGPointMake(self.frame.size.width/(count-1)*i+self.frame.origin.x, self.frame.origin.y);
         Bullet *bullet = [Bullet bulletWithCenter:center bulletSource:BulletSourceFirendly bulletShapeType:BulletShapeTypeKIJINSEIJA];
         [touchView addSubview:bullet];
+        bullet.delegate = superController;
         double angle = M_PI/48;
         CGFloat j = i - (count-1)/2.0;
         [bullet moveWithAngle:M_PI_2*3 + angle*j velocity:100];

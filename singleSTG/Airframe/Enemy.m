@@ -34,18 +34,3 @@
 }
 
 @end
-
-@implementation Enemy (Boss)
-CGFloat const airframeRadiusBoss = 30;
-NSString *const airframeBossImageName = @"Boss";
-
-- (instancetype)initBossWithCenter:(CGPoint)center{
-    self = [super initWithCenter:center
-                            size:CGSizeMake(60, 60)
-                 detectionRadius:airframeRadiusBoss+10
-                 operationRadius:airframeRadiusBoss
-                           image:[UIImage imageNamed:airframeBossImageName]];
-    return self;
-}
-
-@end

@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, BulletSource) {
 @protocol BulletDelegate <NSObject>
 
 - (Airframe *)objectWillCollidedWithBullet:(Bullet *)bullet;
+- (BOOL)moveState;
 // 碰撞时方法回调
 - (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object;
 // 跃出屏幕时方法回调

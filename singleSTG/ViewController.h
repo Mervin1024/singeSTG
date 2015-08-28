@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Barrage.h"
 
-@interface ViewController : UIViewController<BulletDelegate>
+@interface ViewController : UIViewController
 
 @end
 

@@ -11,9 +11,3 @@
 @interface Enemy : Airframe
 
 @end
-
-@interface Enemy (Boss)
-
-- (instancetype)initBossWithCenter:(CGPoint)center;
-
-@end

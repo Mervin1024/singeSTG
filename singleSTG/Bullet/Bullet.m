@@ -13,6 +13,8 @@
     BulletSmallJade *smallJadeBullet;
     BulletEllipse *ellipseBullet;
     BulletKIJINSEIJA *KIJINSEIJABullet;
+    
+    CGFloat moveVelocity;
 }
 
 @end
@@ -26,23 +28,23 @@
     switch (bulletShapeType) {
         case BulletShapeTypeSmallJade:{
             smallJadeBullet = [[BulletSmallJade alloc]init];
-            CGFloat diameter = smallJadeBullet.diameter;
+            CGFloat diameter = smallJadeBullet.diameter+4;
             frame = CGRectMake(center.x-diameter/2, center.y-diameter/2, diameter, diameter);
             image = smallJadeBullet.bulletImage;
             break;
         }
         case BulletShapeTypeEllipse:{
             ellipseBullet = [[BulletEllipse alloc]init];
-            CGFloat majorAxis = ellipseBullet.majorAxis;
-            CGFloat shortAxis = ellipseBullet.shortAxis;
+            CGFloat majorAxis = ellipseBullet.majorAxis+4;
+            CGFloat shortAxis = ellipseBullet.shortAxis+4;
             frame = CGRectMake(center.x-majorAxis/2, center.y-shortAxis/2, majorAxis, shortAxis);
             image = ellipseBullet.bulletImage;
             break;
         }
         case BulletShapeTypeKIJINSEIJA:{
             KIJINSEIJABullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeMini];
-            CGFloat horizontalSide = KIJINSEIJABullet.horizontalSide;
-            CGFloat verticalSide = KIJINSEIJABullet.verticalSide;
+            CGFloat horizontalSide = KIJINSEIJABullet.horizontalSide+4;
+            CGFloat verticalSide = KIJINSEIJABullet.verticalSide+4;
             frame = CGRectMake(center.x-horizontalSide/2, center.y-verticalSide/2, horizontalSide, verticalSide);
             image = KIJINSEIJABullet.bulletImage;
             break;
@@ -91,7 +93,6 @@
     // 潜在碰撞区
     if ([self isCollidedWithObject:object collisionZone:self.collisionZone]) {
         if ([self isCollidedWithObj:object]) { // 两单位碰撞
-            NSLog(@"碰撞");
             if ([self.delegate respondsToSelector:@selector(bullet:didCollidedWithAirframe:)]) {
                 [self.delegate bullet:self didCollidedWithAirframe:object];
             }
@@ -146,8 +147,12 @@
         CGPoint transformateCenter = [self coordinateTransformationCenter:obj.center];
         CGFloat x = fabs(transformateCenter.x);
         CGFloat y = fabs(transformateCenter.y);
-        if (x > KIJINSEIJABullet.horizontalSide/2 ||
-            y > KIJINSEIJABullet.verticalSide/2) {
+        if (x > KIJINSEIJABullet.horizontalSide/2+obj.detectionRadius ||
+            y > KIJINSEIJABullet.verticalSide/2+obj.detectionRadius) {
+            return NO;
+        }
+        double distance = sqrt(pow(x-KIJINSEIJABullet.horizontalSide/2, 2)+pow(y-KIJINSEIJABullet.verticalSide/2, 2));
+        if (distance > obj.detectionRadius) {
             return NO;
         }
         return YES;
@@ -172,24 +177,36 @@
 #pragma mark - Bullet Move Method
 
 - (void)move{
+    if ([self.delegate respondsToSelector:@selector(moveState)]) {
+        self.moveEnable = [self.delegate moveState];
+    }
+    moveVelocity = self.velocity;
     if (!self.moveEnable) {
-        NSLog(@"%@ cannot move",[self class]);
-        return;
+        moveVelocity = 0;
     }
     if (![self continueMove]) {
         return;
     }
     CGPoint center = self.center;
-    center.x += cos(self.forwardAngle)*self.velocity/10;
-    center.y += sin(self.forwardAngle)*self.velocity/10;
-    if (self.bulletShapeType == BulletShapeTypeKIJINSEIJA) {
+    center.x += cos(self.forwardAngle)*moveVelocity/10;
+    center.y += sin(self.forwardAngle)*moveVelocity/10;
+    if (self.bulletShapeType != BulletShapeTypeKIJINSEIJA) {
+        [UIView animateWithDuration:0.01 animations:^{
+            self.center = center;
+        }completion:^(BOOL finished){
+            if (finished) {
+                [self move];
+            }
+        }];
+        
+    }else{
         BulletKIJINSEIJA *bullet = KIJINSEIJABullet;
         if (KIJINSEIJABullet.times == 5) {
             bullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeNormal];
         }else if (KIJINSEIJABullet.times == 15){
             bullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeLarge];
         }
-        CGRect frame = CGRectMake(center.x-bullet.horizontalSide/2, center.y-bullet.verticalSide/2, bullet.horizontalSide, bullet.verticalSide);
+        CGRect frame = CGRectMake(center.x-(bullet.horizontalSide+4)/2, center.y-(bullet.verticalSide+4)/2, bullet.horizontalSide+4, bullet.verticalSide+4);
         UIImage *image = bullet.bulletImage;
         
         [UIView animateWithDuration:0.01 animations:^{
@@ -202,14 +219,6 @@
             }
             self.center = center;
             KIJINSEIJABullet.times++;
-        }completion:^(BOOL finished){
-            if (finished) {
-                [self move];
-            }
-        }];
-    }else{
-        [UIView animateWithDuration:0.01 animations:^{
-            self.center = center;
         }completion:^(BOOL finished){
             if (finished) {
                 [self move];
@@ -246,7 +255,7 @@
 #pragma mark - BulletSmallJade
 
 @implementation BulletSmallJade
-CGFloat const smallJadeDiameter = 15;
+CGFloat const smallJadeDiameter = 12.5;
 NSString *const smallJadeImage = @"SmallJade";
 
 - (instancetype)init{
@@ -263,8 +272,8 @@ NSString *const smallJadeImage = @"SmallJade";
 #pragma mark - BulletEllipse
 
 @implementation BulletEllipse
-CGFloat const EllipseMajorAxis = 15.5;
-CGFloat const EllipseShortAxis = 10.5;
+CGFloat const EllipseMajorAxis = 11.5;
+CGFloat const EllipseShortAxis = 6.5;
 NSString *const EllipseImage = @"Ellipse";
 
 - (instancetype)init{
@@ -282,10 +291,10 @@ NSString *const EllipseImage = @"Ellipse";
 #pragma mark - BulletKIJINSEIJA
 
 @implementation BulletKIJINSEIJA
-CGFloat const vertical = 12;
-CGFloat const miniHorizontal = 18;
-CGFloat const normalHorizontal = 32;
-CGFloat const largeHorizontal = 35;
+CGFloat const vertical = 8;
+CGFloat const miniHorizontal = 14;
+CGFloat const normalHorizontal = 28;
+CGFloat const largeHorizontal = 31;
 NSString *const KIJINSEIJAMiniImage = @"KIJINSEIJATypeMini";
 NSString *const KIJINSEIJANormalImage = @"KIJINSEIJATypeNormal";
 NSString *const KIJINSEIJALargeImage = @"KIJINSEIJATypeLarge";

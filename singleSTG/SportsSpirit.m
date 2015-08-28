@@ -44,7 +44,6 @@
 
 - (void)move{
     if (!self.moveEnable) {
-        NSLog(@"%@ cannot move",[self class]);
         return;
     }
     if (![self continueMove]) {
