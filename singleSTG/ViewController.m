@@ -123,14 +123,6 @@
     [player stopShoot];
     [optionView appear];
     [operationView.pauseButton setBackgroundColor:[UIColor yellowColor]];
-//    if (!pause) {
-//        [operationView.pauseButton setTitle:@"Continue" forState:UIControlStateNormal];
-//
-//        pause = YES;
-//    }else{
-//        [operationView.pauseButton restore];
-//        pause = NO;
-//    }
     
 }
 
@@ -174,7 +166,7 @@
     }
 }
 
-- (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(id)object{
+- (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object{
     
 }
 
