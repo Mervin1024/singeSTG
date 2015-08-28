@@ -43,23 +43,19 @@ CGFloat wheelScale = 7;
     CGFloat buttonHight = operationViewHight/wheelScale*((wheelScale-3)/2);
     
     // pauseButton
-    pauseButton = [KeyButton buttonWithType:UIButtonTypeCustom frame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Pause" image:nil];
-    [pauseButton setBackgroundColor:[UIColor orangeColor]];
+    pauseButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Pause" image:nil];
     [self addSubview:pauseButton];
     
     // slowButton
-    slowButton = [KeyButton buttonWithType:UIButtonTypeCustom frame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Slow" image:nil];
-    [slowButton setBackgroundColor:[UIColor orangeColor]];
+    slowButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Slow" image:nil];
     [self addSubview:slowButton];
     
     // shotButton
-    shotButton = [KeyButton buttonWithType:UIButtonTypeCustom frame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Shot" image:nil];
-    [shotButton setBackgroundColor:[UIColor orangeColor]];
+    shotButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Shot" image:nil];
     [self addSubview:shotButton];
     
     // actionButton
-    actionButton = [KeyButton buttonWithType:UIButtonTypeCustom frame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Boom" image:nil];
-    [actionButton setBackgroundColor:[UIColor orangeColor]];
+    actionButton  = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Boom" image:nil];
     [self addSubview:actionButton];
 }
 
@@ -70,20 +66,53 @@ CGFloat wheelScale = 7;
 @end
 
 @implementation KeyButton
-
-- (instancetype)initWithFrame:(CGRect)frame type:(UIButtonType)buttonType title:(NSString *)title image:(UIImage *)image{
-    self = [UIButton buttonWithType:buttonType];
+@synthesize restoreDic;
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backColor image:(UIImage *)image{
+    self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundImage:image forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self setTitleColor:titleColor forState:UIControlStateNormal];
+        [self setBackgroundColor:backColor];
         [self setTitle:title forState:UIControlStateNormal];
-        [self setFrame:frame];
+        id ima = image;
+        if (!ima) {
+            ima = [NSNull null];
+        }
+        restoreDic = @{@"Title":title,
+                       @"TitleColor":[UIColor blackColor],
+                       @"BackgroundColor":backColor,
+                       @"Frame":@[@(frame.origin.x),@(frame.origin.y),@(frame.size.width),@(frame.size.height)],
+                       @"BackgroundImage":ima};
     }
     return self;
 }
 
-+ (instancetype)buttonWithType:(UIButtonType)buttonType frame:(CGRect)frame title:(NSString *)title image:(UIImage *)image{
-    return [[KeyButton alloc]initWithFrame:frame type:buttonType title:title image:image];
++ (instancetype)buttonWithFrame:(CGRect)frame title:(NSString *)title titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backColor image:(UIImage *)image{
+    return [[KeyButton alloc]initWithFrame:frame title:title titleColor:titleColor backgroundColor:backColor image:image];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image{
+    self = [self initWithFrame:frame title:title titleColor:[UIColor blackColor] backgroundColor:[UIColor orangeColor] image:image];
+    
+    return self;
+}
+
+
+
+// 按钮属性复原
+- (void)restore{
+    [self setTitleColor:[restoreDic objectForKey:@"TitleColor"] forState:UIControlStateNormal];
+    id image = [restoreDic objectForKey:@"BackgroundImage"];
+    if ([image isKindOfClass:[NSNull class]]) {
+        image = nil;
+    }
+    [self setBackgroundImage:image forState:UIControlStateNormal];
+    [self setBackgroundColor:[restoreDic objectForKey:@"BackgroundColor"]];
+    [self setTitle:[restoreDic objectForKey:@"Title"] forState:UIControlStateNormal];
+    NSArray *frameArray = [restoreDic objectForKey:@"Frame"];
+    CGRect frame = CGRectMake([frameArray[0] floatValue], [frameArray[1] floatValue], [frameArray[2] floatValue], [frameArray[3] floatValue]);
+    [self setFrame:frame];
+    self.enabled = YES;
 }
 
 @end

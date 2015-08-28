@@ -13,6 +13,7 @@
 		EEE738A01B8DAE1D0060CD36 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389C1B8DAE1D0060CD36 /* Enemy.m */; };
 		EEE738A11B8DAE1D0060CD36 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389E1B8DAE1D0060CD36 /* Player.m */; };
 		EEE738A61B8DCC8E0060CD36 /* TouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738A31B8DBF750060CD36 /* TouchView.m */; };
+		EEE9E2991B902193000CE2E1 /* OptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE9E2981B902193000CE2E1 /* OptionView.m */; };
 		EEEC183F1B8C063E00D8A99D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC183E1B8C063E00D8A99D /* main.m */; };
 		EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18411B8C063E00D8A99D /* AppDelegate.m */; };
 		EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18441B8C063E00D8A99D /* ViewController.m */; };
@@ -49,6 +50,8 @@
 		EEE7389E1B8DAE1D0060CD36 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Airframe/Player.m; sourceTree = "<group>"; };
 		EEE738A21B8DBF750060CD36 /* TouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchView.h; path = Airframe/TouchView.h; sourceTree = "<group>"; };
 		EEE738A31B8DBF750060CD36 /* TouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchView.m; path = Airframe/TouchView.m; sourceTree = "<group>"; };
+		EEE9E2971B902193000CE2E1 /* OptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionView.h; path = View/OptionView.h; sourceTree = "<group>"; };
+		EEE9E2981B902193000CE2E1 /* OptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionView.m; path = View/OptionView.m; sourceTree = "<group>"; };
 		EEEC18391B8C063E00D8A99D /* singleSTG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = singleSTG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEC183D1B8C063E00D8A99D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEC183E1B8C063E00D8A99D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -90,6 +93,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EEE9E2961B902113000CE2E1 /* OperationView */ = {
+			isa = PBXGroup;
+			children = (
+				EEF0A7011B8EBEE2001A7418 /* OperationView.h */,
+				EEF0A7021B8EBEE2001A7418 /* OperationView.m */,
+				EEF0A7041B8EBF81001A7418 /* SteeringWheel.h */,
+				EEF0A7051B8EBF81001A7418 /* SteeringWheel.m */,
+			);
+			name = OperationView;
+			sourceTree = "<group>";
+		};
 		EEEC18301B8C063E00D8A99D = {
 			isa = PBXGroup;
 			children = (
@@ -200,11 +214,10 @@
 		EEF0A7081B8EE625001A7418 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EEF0A7011B8EBEE2001A7418 /* OperationView.h */,
-				EEF0A7021B8EBEE2001A7418 /* OperationView.m */,
-				EEF0A7041B8EBF81001A7418 /* SteeringWheel.h */,
-				EEF0A7051B8EBF81001A7418 /* SteeringWheel.m */,
+				EEE9E2961B902113000CE2E1 /* OperationView */,
 				EEEC18701B8C54DB00D8A99D /* Barrage */,
+				EEE9E2971B902193000CE2E1 /* OptionView.h */,
+				EEE9E2981B902193000CE2E1 /* OptionView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -322,6 +335,7 @@
 				EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */,
 				EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */,
 				EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */,
+				EEE9E2991B902193000CE2E1 /* OptionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

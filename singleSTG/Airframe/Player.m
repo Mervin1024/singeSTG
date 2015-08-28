@@ -31,13 +31,20 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
         touchView.delegate = self;
         [superView addSubview:touchView];
 //        self.moveEnable = NO;
-        self.determine.hidden = NO;
+//        self.determine.hidden = NO;
+        _slow = NO;
+        _shooting = NO;
     }
     return self;
 }
 
 + (instancetype)playerWithCenter:(CGPoint)center superView:(UIView *)superView{
     return [[Player alloc]initWithCenter:center superView:superView];
+}
+
+- (void)setSlow:(BOOL)slow{
+    _slow = slow;
+    self.determine.hidden = !slow;
 }
 
 - (void)startShoot{
@@ -55,11 +62,14 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
     if (!self.shooting) {
         return;
     }
-    for (int i = 0; i < 3; i++) {
-        CGPoint center = CGPointMake(self.frame.size.width/2*(i-1)+self.center.x, self.frame.origin.y);
-        Bullet *bullet = [Bullet bulletWithCenter:center bulletSource:BulletSourceFirendly bulletShapeType:BulletShapeTypeEllipse];
+    NSInteger count = 5;
+    for (int i = 0; i < count; i++) {
+        CGPoint center = CGPointMake(self.frame.size.width/(count-1)*i+self.frame.origin.x, self.frame.origin.y);
+        Bullet *bullet = [Bullet bulletWithCenter:center bulletSource:BulletSourceFirendly bulletShapeType:BulletShapeTypeKIJINSEIJA];
         [touchView addSubview:bullet];
-        [bullet moveWithAngle:M_PI_2*3 velocity:100];
+        double angle = M_PI/48;
+        CGFloat j = i - (count-1)/2.0;
+        [bullet moveWithAngle:M_PI_2*3 + angle*j velocity:100];
     }
     [self performSelector:@selector(addBullets) withObject:nil afterDelay:0.1];
 }

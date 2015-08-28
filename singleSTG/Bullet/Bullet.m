@@ -10,7 +10,9 @@
 #import "Airframe.h"
 
 @interface Bullet (){
-
+    BulletSmallJade *smallJadeBullet;
+    BulletEllipse *ellipseBullet;
+    BulletKIJINSEIJA *KIJINSEIJABullet;
 }
 
 @end
@@ -23,18 +25,26 @@
     UIImage *image;
     switch (bulletShapeType) {
         case BulletShapeTypeSmallJade:{
-            BulletSmallJade *bulletShape = [[BulletSmallJade alloc]init];
-            CGFloat diameter = bulletShape.diameter;
+            smallJadeBullet = [[BulletSmallJade alloc]init];
+            CGFloat diameter = smallJadeBullet.diameter;
             frame = CGRectMake(center.x-diameter/2, center.y-diameter/2, diameter, diameter);
-            image = bulletShape.bulletImage;
+            image = smallJadeBullet.bulletImage;
             break;
         }
         case BulletShapeTypeEllipse:{
-            BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
-            CGFloat majorAxis = bulletShape.majorAxis;
-            CGFloat shortAxis = bulletShape.shortAxis;
+            ellipseBullet = [[BulletEllipse alloc]init];
+            CGFloat majorAxis = ellipseBullet.majorAxis;
+            CGFloat shortAxis = ellipseBullet.shortAxis;
             frame = CGRectMake(center.x-majorAxis/2, center.y-shortAxis/2, majorAxis, shortAxis);
-            image = bulletShape.bulletImage;
+            image = ellipseBullet.bulletImage;
+            break;
+        }
+        case BulletShapeTypeKIJINSEIJA:{
+            KIJINSEIJABullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeMini];
+            CGFloat horizontalSide = KIJINSEIJABullet.horizontalSide;
+            CGFloat verticalSide = KIJINSEIJABullet.verticalSide;
+            frame = CGRectMake(center.x-horizontalSide/2, center.y-verticalSide/2, horizontalSide, verticalSide);
+            image = KIJINSEIJABullet.bulletImage;
             break;
         }
         default:
@@ -59,11 +69,13 @@
             zone = self.frame;
             break;
         case BulletShapeTypeEllipse:{
-            BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
-            CGFloat majorAxis = bulletShape.majorAxis;
+            CGFloat majorAxis = ellipseBullet.majorAxis;
             zone = CGRectMake(self.center.x-majorAxis/2, self.center.y-majorAxis/2, majorAxis, majorAxis);
             break;
         }
+        case BulletShapeTypeKIJINSEIJA:
+            zone = self.frame;
+            break;
         default:
             break;
     }
@@ -113,10 +125,9 @@
 - (BOOL)isCollidedWithObj:(Airframe *)obj{
     // 圆与圆
     if (self.bulletShapeType == BulletShapeTypeSmallJade) {
-        BulletSmallJade *bulletShape = [[BulletSmallJade alloc]init];
         CGFloat x = fabs([obj center].x - self.center.x);
         CGFloat y = fabs([obj center].y - self.center.y);
-        CGFloat r = bulletShape.diameter/2+obj.detectionRadius;
+        CGFloat r = smallJadeBullet.diameter/2+obj.detectionRadius;
         CGFloat d = powf(x, 2) + powf(y, 2);
         if (d <= powf(r, 2)) { // 两圆碰撞
             return YES;
@@ -124,13 +135,22 @@
         return NO;
     // 圆与椭圆
     }else if (self.bulletShapeType == BulletShapeTypeEllipse){
-        BulletEllipse *bulletShape = [[BulletEllipse alloc]init];
         CGPoint transformateCenter = [self coordinateTransformationCenter:obj.center];
-        CGFloat p = powf(transformateCenter.x, 2)/powf(bulletShape.majorAxis/2+obj.detectionRadius/2, 2) + powf(transformateCenter.y, 2)/powf(bulletShape.shortAxis/2+obj.detectionRadius/2, 2);
+        CGFloat p = powf(transformateCenter.x, 2)/powf(ellipseBullet.majorAxis/2+obj.detectionRadius/2, 2) + powf(transformateCenter.y, 2)/powf(ellipseBullet.shortAxis/2+obj.detectionRadius/2, 2);
         if (p <= 1) {
             return YES;
         }
         return NO;
+    // 圆与矩形
+    }else if (self.bulletShapeType == BulletShapeTypeKIJINSEIJA){
+        CGPoint transformateCenter = [self coordinateTransformationCenter:obj.center];
+        CGFloat x = fabs(transformateCenter.x);
+        CGFloat y = fabs(transformateCenter.y);
+        if (x > KIJINSEIJABullet.horizontalSide/2 ||
+            y > KIJINSEIJABullet.verticalSide/2) {
+            return NO;
+        }
+        return YES;
     }
     return NO;
 }
@@ -138,7 +158,7 @@
 // 转换坐标系
 - (CGPoint)coordinateTransformationCenter:(CGPoint)center{
     /**
-     将object中心点坐标转化为"以bullet中心点为中心，以长轴为X轴，短轴为Y轴的坐标系"的坐标
+     将原坐标系坐标center转化为"以bullet中心点为中心，以长轴为X轴，短轴为Y轴的坐标系"的坐标
      
      这样，检测碰撞只需计算转换后的点坐标与"坐标原点“的位置关系
      */
@@ -150,6 +170,53 @@
 }
 
 #pragma mark - Bullet Move Method
+
+- (void)move{
+    if (!self.moveEnable) {
+        NSLog(@"%@ cannot move",[self class]);
+        return;
+    }
+    if (![self continueMove]) {
+        return;
+    }
+    CGPoint center = self.center;
+    center.x += cos(self.forwardAngle)*self.velocity/10;
+    center.y += sin(self.forwardAngle)*self.velocity/10;
+    if (self.bulletShapeType == BulletShapeTypeKIJINSEIJA) {
+        BulletKIJINSEIJA *bullet = KIJINSEIJABullet;
+        if (KIJINSEIJABullet.times == 5) {
+            bullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeNormal];
+        }else if (KIJINSEIJABullet.times == 15){
+            bullet = [[BulletKIJINSEIJA alloc]initWithBulletKIJINSEIJAType:BulletKIJINSEIJATypeLarge];
+        }
+        CGRect frame = CGRectMake(center.x-bullet.horizontalSide/2, center.y-bullet.verticalSide/2, bullet.horizontalSide, bullet.verticalSide);
+        UIImage *image = bullet.bulletImage;
+        
+        [UIView animateWithDuration:0.01 animations:^{
+            if (KIJINSEIJABullet.times == 5 || KIJINSEIJABullet.times == 15) {
+                double angle = self.forwardAngle;
+                self.forwardAngle = 0;
+                self.frame = frame;
+                self.forwardAngle = angle;
+                self.image = image;
+            }
+            self.center = center;
+            KIJINSEIJABullet.times++;
+        }completion:^(BOOL finished){
+            if (finished) {
+                [self move];
+            }
+        }];
+    }else{
+        [UIView animateWithDuration:0.01 animations:^{
+            self.center = center;
+        }completion:^(BOOL finished){
+            if (finished) {
+                [self move];
+            }
+        }];
+    }
+}
 
 - (BOOL)continueMove{
     // 跃出屏幕，释放
@@ -212,17 +279,37 @@ NSString *const EllipseImage = @"Ellipse";
 
 @end
 
-@implementation BulletKIJINSEIJA
-CGFloat const bulletLongSide = 15.5;
-CGFloat const bulletShortSide = 10.5;
-NSString *const KIJINSEIJAImage = @"KIJINSEIJA_1";
+#pragma mark - BulletKIJINSEIJA
 
-- (instancetype)init{
+@implementation BulletKIJINSEIJA
+CGFloat const vertical = 12;
+CGFloat const miniHorizontal = 18;
+CGFloat const normalHorizontal = 32;
+CGFloat const largeHorizontal = 35;
+NSString *const KIJINSEIJAMiniImage = @"KIJINSEIJATypeMini";
+NSString *const KIJINSEIJANormalImage = @"KIJINSEIJATypeNormal";
+NSString *const KIJINSEIJALargeImage = @"KIJINSEIJATypeLarge";
+
+- (instancetype)initWithBulletKIJINSEIJAType:(BulletKIJINSEIJAType)KIJINSEIJAType{
     self = [super init];
     if (self) {
-        _longSide = bulletLongSide;
-        _shortSide = bulletShortSide;
-        _bulletImage = [UIImage imageNamed:KIJINSEIJAImage];
+        _bulletKIJINSEIJAType = KIJINSEIJAType;
+        _verticalSide = vertical;
+        switch (_bulletKIJINSEIJAType) {
+            case BulletKIJINSEIJATypeMini:
+                _horizontalSide = miniHorizontal;
+                _bulletImage = [UIImage imageNamed:KIJINSEIJAMiniImage];
+                break;
+            case BulletKIJINSEIJATypeNormal:
+                _horizontalSide = normalHorizontal;
+                _bulletImage = [UIImage imageNamed:KIJINSEIJANormalImage];
+                break;
+            case BulletKIJINSEIJATypeLarge:
+                _horizontalSide = largeHorizontal;
+                _bulletImage = [UIImage imageNamed:KIJINSEIJALargeImage];
+                break;
+        }
+        _times = 0;
     }
     return self;
 }

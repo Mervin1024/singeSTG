@@ -10,12 +10,15 @@
 #import "Bullet.h"
 #import "Player.h"
 #import "OperationView.h"
+#import "OptionView.h"
 
 @interface ViewController () <OperationViewDelegate>{
     OperationView *operationView;
     Barrage *barrage;
     Player *player;
+    OptionView *optionView;
     BOOL gameStart;
+    BOOL pause;
     
 }
 
@@ -25,12 +28,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self initBarrage];
+    [self initEnemy];
     [self initPlayer];
 //    [self initButton];
     [self initOperationView];
+    [self initOptionView];
     
     gameStart = NO;
+    pause = NO;
     [self.view setBackgroundColor:[UIColor yellowColor]];
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -40,18 +45,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initButton{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(50, 50, 100, 50)];
-    [button setTitle:@"start" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(checked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-}
-
-- (void)initBarrage{
-    barrage = [[Barrage alloc]initWithSuperViewController:self];
-    [self.view addSubview:barrage];
+- (void)initEnemy{
+    
 }
 
 - (void)initPlayer{
@@ -59,10 +54,40 @@
     [self.view addSubview:player];
 }
 
+- (void)initOptionView{
+    optionView = [[OptionView alloc]init];
+    [self.view addSubview:optionView];
+    [optionView addOptionWithTitle:@"Continue" target:self select:@selector(coutinue)];
+    [optionView addOptionWithTitle:@"Restart" target:self select:@selector(gameStart)];
+    [optionView addOptionWithTitle:@"Exit" target:self select:@selector(gameEnd)];
+}
+
+- (void)coutinue{
+    
+    [optionView disAppear];
+    [operationView.pauseButton restore];
+}
+
+- (void)gameStart{
+    
+    [optionView disAppear];
+    [operationView.pauseButton restore];
+}
+
+- (void)gameEnd{
+    
+    [optionView disAppear];
+    [operationView.pauseButton restore];
+}
+
 - (void)initOperationView{
     operationView = [[OperationView alloc]initWithSuperView:self.view andViewController:self];
     operationView.delegate = self;
     [operationView.shotButton addTarget:self action:@selector(checkedShotButton) forControlEvents:UIControlEventTouchUpInside];
+    [operationView.slowButton addTarget:self action:@selector(checkedSlowButton) forControlEvents:UIControlEventTouchUpInside];
+    [operationView.pauseButton addTarget:self action:@selector(checkedPauseButton) forControlEvents:UIControlEventTouchUpInside];
+    [operationView.actionButton addTarget:self action:@selector(checkedActionButton) forControlEvents:UIControlEventTouchDown];
+    
 }
 
 - (void)checkedShotButton{
@@ -72,9 +97,39 @@
         player.shooting = YES;
     }else{
         [player stopShoot];
-        [operationView.shotButton setTitle:@"Shot" forState:UIControlStateNormal];
+        [operationView.shotButton restore];
         player.shooting = NO;
     }
+}
+
+- (void)checkedSlowButton{
+    if (!player.slow) {
+        [operationView.slowButton setBackgroundColor:[UIColor yellowColor]];
+        player.slow = YES;
+    }else{
+        [operationView.slowButton restore];
+        player.slow = NO;
+    }
+}
+
+- (void)checkedPauseButton{
+    [optionView appear];
+    [operationView.pauseButton setBackgroundColor:[UIColor yellowColor]];
+//    if (!pause) {
+//        [operationView.pauseButton setTitle:@"Continue" forState:UIControlStateNormal];
+//
+//        pause = YES;
+//    }else{
+//        [operationView.pauseButton restore];
+//        pause = NO;
+//    }
+    
+}
+
+- (void)checkedActionButton{
+    [operationView.actionButton setBackgroundColor:[UIColor redColor]];
+    operationView.actionButton.enabled = NO;
+    [operationView.actionButton performSelector:@selector(restore) withObject:nil afterDelay:1];
 }
 
 - (void)checked:(UIButton *)button{

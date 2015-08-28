@@ -12,6 +12,7 @@
 @interface Player : Airframe
 
 @property (assign, nonatomic) BOOL shooting;
+@property (assign, nonatomic) BOOL slow;
 
 - (instancetype)initWithCenter:(CGPoint)center superView:(UIView *)superView;
 + (instancetype)playerWithCenter:(CGPoint)center superView:(UIView *)superView;

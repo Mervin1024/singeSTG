@@ -98,8 +98,12 @@ typedef NS_ENUM(NSInteger, BulletKIJINSEIJAType) {
 
 @interface BulletKIJINSEIJA : NSObject
 
-@property (assign, nonatomic, readonly) CGFloat longSide; // 长边
-@property (assign, nonatomic, readonly) CGFloat shortSide; // 短边
+@property (assign, nonatomic, readonly) CGFloat horizontalSide; // 水平边
+@property (assign, nonatomic, readonly) CGFloat verticalSide; // 垂直边
 @property (strong, nonatomic, readonly) UIImage *bulletImage;
+@property (assign, nonatomic, readonly) BulletKIJINSEIJAType bulletKIJINSEIJAType;
+@property (assign, nonatomic) NSUInteger times;
+
+- (instancetype)initWithBulletKIJINSEIJAType:(BulletKIJINSEIJAType)KIJINSEIJAType;
 
 @end

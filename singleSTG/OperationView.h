@@ -29,6 +29,13 @@
 
 @interface KeyButton : UIButton
 
-- (instancetype)initWithFrame:(CGRect)frame type:(UIButtonType)buttonType title:(NSString *)title image:(UIImage *)image;
-+ (instancetype)buttonWithType:(UIButtonType)buttonType frame:(CGRect)frame title:(NSString *)title image:(UIImage *)image;
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backColor image:(UIImage *)image;
++ (instancetype)buttonWithFrame:(CGRect)frame title:(NSString *)title titleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backColor image:(UIImage *)image;
+// titleColor = blackColor  backgroundColor = orangeColor
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title image:(UIImage *)image;
+
+
+- (void)restore;
+
+@property (copy, nonatomic) NSDictionary *restoreDic;
 @end
