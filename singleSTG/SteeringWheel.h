@@ -16,16 +16,9 @@
 
 @end
 
-@interface SteeringWheel : UIView
+@interface SteeringWheel : UIImageView
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
 @property (weak, nonatomic) id delegate;
-@end
-
-@interface TouchButton : TouchView
-
-- (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image;
-- (instancetype)initWithFrame:(CGRect)frame;
-
 @end

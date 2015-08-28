@@ -9,28 +9,35 @@
 #import "SteeringWheel.h"
 
 @interface SteeringWheel () <TouchViewDelegate>{
-    TouchButton *button;
+    UIImageView *centerImageView;
 }
 
 @end
 
 @implementation SteeringWheel
-
+NSString *const steetingWheelImage = @"Disc";
+NSString *const steetingWheelCenterImage = @"DiscCenter";
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         CGFloat buttonRadius = frame.size.width/2/3;
-        button = [[TouchButton alloc]initWithFrame:CGRectMake(buttonRadius*2, buttonRadius*2, buttonRadius*2, buttonRadius*2)];
-        [self addSubview:button];
-        button.delegate = self;
-        
-        self.backgroundColor = [UIColor orangeColor];
+        centerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(buttonRadius*2, buttonRadius*2, buttonRadius*2, buttonRadius*2)];
+        [self addSubview:centerImageView];
+        centerImageView.image = [UIImage imageNamed:steetingWheelCenterImage];
+        self.image = [UIImage imageNamed:steetingWheelImage];
+//        self.backgroundColor = [UIColor clearColor];
+        TouchView *touchView = [[TouchView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        touchView.delegate = self;
+        [self addSubview:touchView];
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
 #pragma mark - Touch View Delegate
 - (void)touchView:(TouchView *)view touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    NSLog(@"%@",NSStringFromCGPoint(point));
 }
 
 - (void)touchView:(TouchView *)view touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -39,26 +46,6 @@
 
 - (void)touchView:(TouchView *)view touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
-}
-
-@end
-
-@implementation TouchButton
-NSString *const touchButtonImage = @"TouchButton";
-- (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image{
-    if ((self = [super initWithFrame:frame])) {
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        [self addSubview:imageView];
-        [imageView setImage:image];
-        
-        imageView.backgroundColor = [UIColor whiteColor];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame{
-    self = [self initWithFrame:frame image:[UIImage imageNamed:touchButtonImage]];
-    return self;
 }
 
 @end

@@ -30,10 +30,10 @@ NSString *const airframePlayerImageName = @"Hakurei Reimu";
     if (self) {
         superController = superViewController;
         touchView = [[TouchView alloc]initWithFrame:superViewController.view.frame];
-        touchView.delegate = self;
+//        touchView.delegate = self;
         [superViewController.view addSubview:touchView];
-//        self.moveEnable = NO;
-//        self.determine.hidden = NO;
+        self.moveEnable = NO;
+        self.determine.hidden = NO;
         _slow = NO;
         _shooting = NO;
     }
