@@ -28,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self initEnemy];
     [self initPlayer];
 //    [self initButton];
@@ -132,22 +133,6 @@
     [operationView.actionButton performSelector:@selector(restore) withObject:nil afterDelay:1];
 }
 
-//- (void)checked:(UIButton *)button{
-//    if (!gameStart) {
-//        NSLog(@"start");
-//        [button setTitle:@"stop" forState:UIControlStateNormal];
-//        [barrage start];
-//        [player startShoot];
-//        gameStart = YES;
-//    }else{
-//        NSLog(@"stop");
-//        [button setTitle:@"start" forState:UIControlStateNormal];
-//        [barrage stop];
-//        [player stopShoot];
-//        gameStart = NO;
-//    }
-//}
-
 - (BOOL)moveState{
     if (!gameStart) {
         return NO;
@@ -165,7 +150,7 @@
             break;
     }
 }
-
+#pragma mark - Bullet delegate
 - (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object{
     
 }
@@ -173,8 +158,25 @@
 - (void)bullet:(Bullet *)bullet didOverScreenWithCenter:(CGPoint)center{
 //    [barrage.allBullets removeObject:bullet];
 }
+#pragma mark - OperationView delagate
+- (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel{
+    player.moveEnable = YES;
+    [player moveWithAngle:0 velocity:0];
+}
 
 - (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle{
-    NSLog(@"%f",angle);
+//    NSLog(@"%f",angle/M_PI*180);
+    player.forwardAngle = angle;
+    if (player.slow) {
+        player.velocity = 10;
+    }else{
+        player.velocity = 20;
+    }
+}
+
+- (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel{
+    player.forwardAngle = 0;
+    player.velocity = 0;
+    player.moveEnable = NO;
 }
 @end

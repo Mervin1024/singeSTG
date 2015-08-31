@@ -8,6 +8,7 @@
 
 #import "Bullet.h"
 #import "Airframe.h"
+#import "Math.h"
 
 @interface Bullet (){
     BulletSmallJade *smallJadeBullet;
@@ -62,6 +63,12 @@
 
 + (instancetype)bulletWithCenter:(CGPoint)center bulletSource:(BulletSource)bulletSource bulletShapeType:(BulletShapeType)bulletShapeType{
     return [[Bullet alloc]initWithCenter:center bulletSource:bulletSource bulletShapeType:bulletShapeType];
+}
+
+- (void)setForwardAngle:(double)forwardAngle{
+    double difference = forwardAngle - super.forwardAngle;
+    super.forwardAngle = forwardAngle;
+    self.transform = CGAffineTransformRotate(self.transform, difference);
 }
 
 - (CGRect)collisionZone{
@@ -126,11 +133,9 @@
 - (BOOL)isCollidedWithObj:(Airframe *)obj{
     // 圆与圆
     if (self.bulletShapeType == BulletShapeTypeSmallJade) {
-        CGFloat x = fabs([obj center].x - self.center.x);
-        CGFloat y = fabs([obj center].y - self.center.y);
         CGFloat r = smallJadeBullet.diameter/2+obj.detectionRadius;
-        CGFloat d = powf(x, 2) + powf(y, 2);
-        if (d <= powf(r, 2)) { // 两圆碰撞
+        CGFloat d = [Math distanceOfPiont:obj.center otherPoint:self.center];
+        if (d <= r) { // 两圆碰撞
             return YES;
         }
         return NO;

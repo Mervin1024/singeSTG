@@ -7,6 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+
+/**
+ 
+ ESC游戏菜单页面
+ 
+ 半透明背景，选项按键位于屏幕中央
+ 
+*/
 @class OptionCell;
 @interface OptionView : UIView
 

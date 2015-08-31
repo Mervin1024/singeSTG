@@ -10,7 +10,6 @@
 
 @implementation Boss
 CGFloat const airframeRadiusBoss = 35;
-//NSString *const airframeBossImageName = @"Boss";
 NSString *const airframeBossImageName = @"GreenBall";
 
 

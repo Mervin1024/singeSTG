@@ -7,6 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+
+/**
+ 
+ 用来捕捉触摸事件的view
+ 
+ */
+
 @class TouchView;
 @protocol TouchViewDelegate <NSObject>
 

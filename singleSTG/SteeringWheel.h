@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "TouchView.h"
-
+/**
+ 
+ 方向控制摇杆
+ 
+ */
 @class SteeringWheel;
 @protocol SteeringWheelDelegate <NSObject>
 
+- (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel;
 - (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle;
+- (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel;;
 
 @end
 

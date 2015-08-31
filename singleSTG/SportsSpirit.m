@@ -27,18 +27,12 @@
     return self;
 }
 
-- (void)setForwardAngle:(double)forwardAngle{
-    double difference = forwardAngle - _forwardAngle;
-    _forwardAngle = forwardAngle;
-    self.transform = CGAffineTransformRotate(self.transform, difference);
-}
-
 - (void)moveWithAngle:(double)angle velocity:(CGFloat)velocity{
     self.forwardAngle = angle;
     self.velocity = velocity;
-    if (velocity == 0) {
-        return;
-    }
+//    if (velocity == 0) {
+//        return;
+//    }
     [self move];
 }
 

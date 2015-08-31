@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "SteeringWheel.h"
+
+#define OPERATION_VIEW_HIGHT 150.0f
+/**
+ 
+ 屏幕下方操控台
+ 
+ */
 @class KeyButton,OperationView;
 @protocol OperationViewDelegate <NSObject>
 
+- (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel;
 - (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle;
+- (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel;
 
 @end
 

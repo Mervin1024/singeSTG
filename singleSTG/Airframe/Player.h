@@ -9,6 +9,12 @@
 #import "Airframe.h"
 #import "Bullet.h"
 
+typedef NS_ENUM(NSInteger, InclinedDirection) {
+    InclinedDirectionLeft,
+    InclinedDirectionRight,
+    InclinedDirectionNormal
+};
+
 @interface Player : Airframe
 
 @property (assign, nonatomic, readonly) BOOL shooting;

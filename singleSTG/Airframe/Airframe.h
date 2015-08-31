@@ -8,6 +8,7 @@
 
 #import "SportsSpirit.h"
 
+#define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 //typedef NS_ENUM(NSInteger, AirframeType) {
 //    // 自机
 //    AirframeTypePlayer,

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE0A24361B94127F00FF0ADA /* Math.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0A24351B94127F00FF0ADA /* Math.m */; };
 		EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */; };
 		EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738911B8DA19B0060CD36 /* SportsSpirit.m */; };
 		EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389A1B8DAE1D0060CD36 /* Airframe.m */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE0A24341B94127F00FF0ADA /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math.h; path = Uikt/Math.h; sourceTree = "<group>"; };
+		EE0A24351B94127F00FF0ADA /* Math.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Math.m; path = Uikt/Math.m; sourceTree = "<group>"; };
 		EEE7388A1B8D86FC0060CD36 /* FirstWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstWeek.h; path = Barrage/FirstWeek.h; sourceTree = "<group>"; };
 		EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstWeek.m; path = Barrage/FirstWeek.m; sourceTree = "<group>"; };
 		EEE738901B8DA19B0060CD36 /* SportsSpirit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportsSpirit.h; sourceTree = "<group>"; };
@@ -96,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE0A24331B9411E900FF0ADA /* Uikt */ = {
+			isa = PBXGroup;
+			children = (
+				EE0A24341B94127F00FF0ADA /* Math.h */,
+				EE0A24351B94127F00FF0ADA /* Math.m */,
+			);
+			name = Uikt;
+			sourceTree = "<group>";
+		};
 		EEE9E2961B902113000CE2E1 /* OperationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +160,7 @@
 		EEEC183B1B8C063E00D8A99D /* singleSTG */ = {
 			isa = PBXGroup;
 			children = (
+				EE0A24331B9411E900FF0ADA /* Uikt */,
 				EEF0A7071B8EE3FE001A7418 /* SportsSpirit */,
 				EEF0A7081B8EE625001A7418 /* View */,
 				EEEC18401B8C063E00D8A99D /* AppDelegate.h */,
@@ -354,6 +367,7 @@
 				EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */,
 				EEEC183F1B8C063E00D8A99D /* main.m in Sources */,
 				EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */,
+				EE0A24361B94127F00FF0ADA /* Math.m in Sources */,
 				EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */,
 				EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */,
 				EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */,

@@ -24,7 +24,8 @@ CGFloat airframeRadiusButterfly = 20;
     if (self) {
         _detectionRadius = detectionRadius;
         _operationRadius = operationRadius;
-        self.determine = [[UIImageView alloc]initWithFrame:CGRectMake(size.width/2-operationRadius, size.height/2-operationRadius, operationRadius*2, operationRadius*2)];
+        CGFloat radius = operationRadius+2;
+        self.determine = [[UIImageView alloc]initWithFrame:CGRectMake(size.width/2-radius, size.height/2-radius, radius*2, radius*2)];
         self.determine.image = [UIImage imageNamed:@"Determine"];
         [self addSubview:self.determine];
         self.determine.hidden = YES;

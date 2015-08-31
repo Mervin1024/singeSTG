@@ -15,11 +15,10 @@
 
 @implementation OperationView
 @synthesize wheel,pauseButton,shotButton,slowButton,actionButton;
-CGFloat operationViewHight = 150;
 CGFloat wheelScale = 7;
 - (instancetype)initWithSuperView:(UIView *)view andViewController:(UIViewController *)viewController{
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    CGRect frame = CGRectMake(0, screenSize.height-operationViewHight, screenSize.width, operationViewHight);
+    CGRect frame = CGRectMake(0, screenSize.height-OPERATION_VIEW_HIGHT, screenSize.width, OPERATION_VIEW_HIGHT);
     if ((self = [super initWithFrame:frame])) {
         
         self.backgroundColor = [UIColor whiteColor];
@@ -34,33 +33,50 @@ CGFloat wheelScale = 7;
 }
 
 - (void)addWheel{
-    wheel = [[SteeringWheel alloc]initWithFrame:CGRectMake(operationViewHight/wheelScale, operationViewHight/wheelScale, operationViewHight/wheelScale*(wheelScale-2), operationViewHight/wheelScale*(wheelScale-2))];
+    wheel = [[SteeringWheel alloc]initWithFrame:CGRectMake(OPERATION_VIEW_HIGHT/wheelScale, OPERATION_VIEW_HIGHT/wheelScale, OPERATION_VIEW_HIGHT/wheelScale*(wheelScale-2), OPERATION_VIEW_HIGHT/wheelScale*(wheelScale-2))];
     [self addSubview:wheel];
 }
 
 - (void)addButtons{
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    CGFloat buttonHight = operationViewHight/wheelScale*((wheelScale-3)/2);
+    CGFloat buttonHight = OPERATION_VIEW_HIGHT/wheelScale*((wheelScale-3)/2);
     
     // pauseButton
-    pauseButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Pause" image:nil];
+    pauseButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-OPERATION_VIEW_HIGHT/wheelScale*2-buttonHight*2*2, OPERATION_VIEW_HIGHT/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Pause" image:nil];
     [self addSubview:pauseButton];
     
     // slowButton
-    slowButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Slow" image:nil];
+    slowButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-OPERATION_VIEW_HIGHT/wheelScale-buttonHight*2, OPERATION_VIEW_HIGHT/wheelScale, buttonHight*2, buttonHight) title:@"Slow" image:nil];
     [self addSubview:slowButton];
     
     // shotButton
-    shotButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale*2-buttonHight*2*2, operationViewHight/wheelScale, buttonHight*2, buttonHight) title:@"Shot" image:nil];
+    shotButton = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-OPERATION_VIEW_HIGHT/wheelScale*2-buttonHight*2*2, OPERATION_VIEW_HIGHT/wheelScale, buttonHight*2, buttonHight) title:@"Shot" image:nil];
     [self addSubview:shotButton];
     
     // actionButton
-    actionButton  = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-operationViewHight/wheelScale-buttonHight*2, operationViewHight/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Boom" image:nil];
+    actionButton  = [[KeyButton alloc]initWithFrame:CGRectMake(screenSize.width-OPERATION_VIEW_HIGHT/wheelScale-buttonHight*2, OPERATION_VIEW_HIGHT/wheelScale*2+buttonHight, buttonHight*2, buttonHight) title:@"Boom" image:nil];
     [self addSubview:actionButton];
 }
-
+#pragma mark - SteeringWheel delegate
 - (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle{
-    [self.delegate operationView:self steeringWheelDirection:angle];
+    if ([self.delegate respondsToSelector:@selector(operationView:steeringWheelDirection:)]) {
+        [self.delegate operationView:self steeringWheelDirection:angle];
+    }
+    
+}
+
+- (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel{
+    if ([self.delegate respondsToSelector:@selector(beginControlSteeringwheel:)]) {
+        [self.delegate beginControlSteeringwheel:steeringWheel];
+    }
+    
+}
+
+- (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel{
+    if ([self.delegate respondsToSelector:@selector(endControlSteeringwheel:)]) {
+        [self.delegate endControlSteeringwheel:steeringWheel];
+    }
+    
 }
 
 @end
