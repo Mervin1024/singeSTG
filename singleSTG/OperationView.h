@@ -19,7 +19,7 @@
 @protocol OperationViewDelegate <NSObject>
 
 - (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel;
-- (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle;
+- (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle velocity:(CGFloat)velocity;
 - (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel;
 
 @end

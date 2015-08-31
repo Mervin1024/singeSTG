@@ -22,12 +22,13 @@
 
 - (instancetype)initWithSuperView:(UIView *)view;
 - (OptionCell *)cellWithTitle:(NSString *)title image:(UIImage *)image target:(id)target select:(SEL)select;
-- (void)setOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select index:(NSUInteger)index;
+- (void)setOptionWithTitle:(NSString *)title index:(NSUInteger)index;
 - (void)addOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select;
+- (void)insertOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select atIndex:(NSUInteger)index;
 - (void)removeOptionAtIndex:(NSUInteger)index;
 
 - (void)appear;
-- (void)disAppear;
+- (void)disAppearWithCompletion:(void(^)(BOOL finished))completion;
 @end
 
 @interface OptionCell : UIButton

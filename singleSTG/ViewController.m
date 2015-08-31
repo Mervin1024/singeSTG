@@ -13,7 +13,7 @@
 #import "OptionView.h"
 #import "Boss.h"
 
-@interface ViewController () <OperationViewDelegate,BulletDelegate>{
+@interface ViewController () <OperationViewDelegate,BulletDelegate,AirframeDelegate>{
     OperationView *operationView;
     Player *player;
     OptionView *optionView;
@@ -46,16 +46,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+//    [self gameEnd];
+//    [self gameStart];
+}
+
 - (void)initEnemy{
-    enemy = [[Boss alloc]initWithCenter:CGPointMake(self.view.center.x, 100)];
+    Boss *boss = [[Boss alloc]initWithCenter:CGPointMake(self.view.center.x, (self.view.frame.size.height-OPERATION_VIEW_HIGHT)/3)];
+    boss.delegate = self;
+    enemy = boss;
     [self.view addSubview:enemy];
 }
 
 - (void)initPlayer{
-    player = [Player playerWithCenter:CGPointMake(self.view.center.x, 400) superViewController:self];
+    player = [Player playerWithCenter:CGPointMake(self.view.center.x, self.view.frame.size.height-OPERATION_VIEW_HIGHT-80) superViewController:self];
     [self.view addSubview:player];
 }
-
+#pragma mark - Option View And Button Target Method
 - (void)initOptionView{
     optionView = [[OptionView alloc]init];
     [self.view addSubview:optionView];
@@ -65,26 +73,35 @@
 }
 
 - (void)coutinue{
-    gameStart = YES;
-    if (operationView.shotButton.isChecked) {
-        [player startShoot];
-    }
-    [optionView disAppear];
+    [optionView disAppearWithCompletion:^(BOOL finished){
+        gameStart = YES;
+        if (operationView.shotButton.isChecked) {
+            [player startShoot];
+        }
+        Boss *boss = enemy;
+        boss.moveEnable = YES;
+        enemy = boss;
+        [enemy moveWithAngle:0 velocity:0];
+    }];
     [operationView.pauseButton restore];
 }
 
 - (void)gameStart{
     NSLog(@"GameRestart");
-//    [optionView disAppear];
-//    [operationView.pauseButton restore];
+    OptionCell *cell = optionView.allOptionCells[0];
+    cell.enabled = YES;
+    [cell setBackgroundColor:[UIColor whiteColor]];
+    player.center = CGPointMake(self.view.center.x, 400);
+    player.hidden = NO;
+    [self coutinue];
+    
+    
 }
 
 - (void)gameEnd{
     NSLog(@"GameEnd");
-//    [optionView disAppear];
-//    [operationView.pauseButton restore];
 }
-
+#pragma mark - Operation View And Button Target Method
 - (void)initOperationView{
     operationView = [[OperationView alloc]initWithSuperView:self.view andViewController:self];
     operationView.delegate = self;
@@ -100,10 +117,19 @@
         [player startShoot];
         [operationView.shotButton setTitle:@"Shooting" forState:UIControlStateNormal];
         operationView.shotButton.isChecked = YES;
+        
+        Boss *boss = enemy;
+        boss.moveEnable = YES;
+        enemy = boss;
+        [enemy moveWithAngle:0 velocity:0];
     }else{
         [player stopShoot];
         [operationView.shotButton restore];
         operationView.shotButton.isChecked = NO;
+        
+        Boss *boss = enemy;
+        boss.moveEnable = NO;
+        enemy = boss;
     }
 }
 
@@ -124,7 +150,9 @@
     [player stopShoot];
     [optionView appear];
     [operationView.pauseButton setBackgroundColor:[UIColor yellowColor]];
-    
+    Boss *boss = enemy;
+    boss.moveEnable = NO;
+    enemy = boss;
 }
 
 - (void)checkedActionButton{
@@ -132,7 +160,28 @@
     operationView.actionButton.enabled = NO;
     [operationView.actionButton performSelector:@selector(restore) withObject:nil afterDelay:1];
 }
+#pragma mark - Airframe delegate
+- (void)airframe:(Airframe *)airframe didCollidedWithAirframe:(Airframe *)object{
+    airframe.moveEnable = NO;
+    object.moveEnable = NO;
+    object.hidden = YES;
+    OptionCell *cell = optionView.allOptionCells[0];
+    cell.enabled = NO;
+    [cell setBackgroundColor:[UIColor grayColor]];
+    [self checkedPauseButton];
+}
 
+- (void)airframe:(Airframe *)airframe didOverScreenWithCenter:(CGPoint)center{
+    
+}
+
+- (Airframe *)objectWillCollidedWithAirframe:(Airframe *)airframe{
+    if ([airframe isKindOfClass:[Enemy class]]) {
+        return player;
+    }
+    return nil;
+}
+#pragma mark - Bullet delegate
 - (BOOL)moveState{
     if (!gameStart) {
         return NO;
@@ -150,13 +199,13 @@
             break;
     }
 }
-#pragma mark - Bullet delegate
+
 - (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object{
     
 }
 
 - (void)bullet:(Bullet *)bullet didOverScreenWithCenter:(CGPoint)center{
-//    [barrage.allBullets removeObject:bullet];
+    
 }
 #pragma mark - OperationView delagate
 - (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel{
@@ -164,14 +213,18 @@
     [player moveWithAngle:0 velocity:0];
 }
 
-- (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle{
-//    NSLog(@"%f",angle/M_PI*180);
+- (void)operationView:(OperationView *)operationView steeringWheelDirection:(double)angle velocity:(CGFloat)velocity{
     player.forwardAngle = angle;
-    if (player.slow) {
-        player.velocity = 10;
+    if (isnan(velocity)) {
+        if (player.slow) {
+            player.velocity = 10;
+        }else{
+            player.velocity = 20;
+        }
     }else{
-        player.velocity = 20;
+        player.velocity = velocity;
     }
+    
 }
 
 - (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel{

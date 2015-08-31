@@ -17,7 +17,7 @@
 @protocol SteeringWheelDelegate <NSObject>
 
 - (void)beginControlSteeringwheel:(SteeringWheel *)steeringWheel;
-- (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle;
+- (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle velocity:(CGFloat)velocity;
 - (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel;;
 
 @end

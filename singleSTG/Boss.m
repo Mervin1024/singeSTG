@@ -9,13 +9,13 @@
 #import "Boss.h"
 
 @implementation Boss
-CGFloat const airframeRadiusBoss = 35;
-NSString *const airframeBossImageName = @"GreenBall";
+CGFloat const airframeRadiusBoss = 40;
+NSString *const airframeBossImageName = @"YAKUMO YUKARI";
 
 
 - (instancetype)initWithCenter:(CGPoint)center{
     self = [super initWithCenter:center
-                            size:CGSizeMake(70, 70)
+                            size:CGSizeMake(53, 88)
                  detectionRadius:airframeRadiusBoss
                  operationRadius:airframeRadiusBoss-10
                            image:[UIImage imageNamed:airframeBossImageName]];

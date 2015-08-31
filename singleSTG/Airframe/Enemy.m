@@ -7,6 +7,7 @@
 //
 
 #import "Enemy.h"
+#import "Math.h"
 
 @implementation Enemy
 
@@ -15,6 +16,17 @@
         return YES;
     }
     if (self.center.y < -20 || self.center.y > [UIScreen mainScreen].bounds.size.height+20) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isCollidedWithObject:(Airframe *)obj{
+    if (!obj) {
+        return NO;
+    }
+    CGFloat distance = [Math distanceOfPiont:self.center otherPoint:obj.center];
+    if (distance <= self.operationRadius+obj.operationRadius) {
         return YES;
     }
     return NO;
@@ -29,6 +41,16 @@
         self.moveEnable = NO;
         [self removeFromSuperview];
         return NO;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(objectWillCollidedWithAirframe:)]) {
+        Airframe *obj = [self.delegate objectWillCollidedWithAirframe:self];
+        if ([self isCollidedWithObject:obj]) {
+            if ([self.delegate respondsToSelector:@selector(airframe:didCollidedWithAirframe:)]) {
+                [self.delegate airframe:self didCollidedWithAirframe:obj];
+            }
+//            return NO;
+        }
     }
     return YES;
 }

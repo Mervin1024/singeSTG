@@ -58,9 +58,9 @@ CGFloat wheelScale = 7;
     [self addSubview:actionButton];
 }
 #pragma mark - SteeringWheel delegate
-- (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle{
-    if ([self.delegate respondsToSelector:@selector(operationView:steeringWheelDirection:)]) {
-        [self.delegate operationView:self steeringWheelDirection:angle];
+- (void)steeringWheel:(SteeringWheel *)steeringWheel direction:(double)angle velocity:(CGFloat)velocity{
+    if ([self.delegate respondsToSelector:@selector(operationView:steeringWheelDirection:velocity:)]) {
+        [self.delegate operationView:self steeringWheelDirection:angle velocity:velocity];
     }
     
 }

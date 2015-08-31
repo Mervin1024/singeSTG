@@ -39,7 +39,12 @@ CGFloat space = 15;
     return [[OptionCell alloc]initWithTitle:title image:image target:target select:select];
 }
 
-- (void)setOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select index:(NSUInteger)index{
+- (void)setOptionWithTitle:(NSString *)title index:(NSUInteger)index{
+    OptionCell *cell = self.allOptionCells[index];
+    [cell setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)insertOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select atIndex:(NSUInteger)index{
     [self addOptionWithTitle:title target:target select:select];
     NSUInteger count = [self.allOptionCells count];
     OptionCell *cellAtIndex = self.allOptionCells[index];
@@ -56,7 +61,6 @@ CGFloat space = 15;
             cell.frame = frame;
         }
     }
-    
 }
 
 - (void)addOptionWithTitle:(NSString *)title target:(id)target select:(SEL)select{
@@ -135,14 +139,19 @@ CGFloat space = 15;
     }];
 }
 
-- (void)disAppear{
+- (void)disAppearWithCompletion:(void(^)(BOOL finished))completion{
     for (OptionCell *cell in self.allOptionCells) {
         cell.hidden = YES;
     }
     [UIView animateWithDuration:0.5 animations:^{
         touchView.alpha = 0;
     }completion:^(BOOL finished){
-        self.hidden = YES;
+        if (finished) {
+            self.hidden = YES;
+            completion(YES);
+        }else{
+            completion(NO);
+        }
     }];
 }
 

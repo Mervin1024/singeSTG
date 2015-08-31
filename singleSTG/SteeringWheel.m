@@ -69,7 +69,7 @@ NSString *const steetingWheelCenterImage = @"DiscCenter";
         }];
     }
     
-    [self.delegate steeringWheel:self direction:[Math radianOfVector:CGPointMake(point.x-wheelCenter.x, point.y-wheelCenter.y)]];
+    [self.delegate steeringWheel:self direction:[Math radianOfVector:CGPointMake(point.x-wheelCenter.x, point.y-wheelCenter.y)] velocity:NAN];
 }
 
 - (void)touchView:(TouchView *)view touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -82,6 +82,7 @@ NSString *const steetingWheelCenterImage = @"DiscCenter";
     }
     if (distance < buttonRadius/3){
         centerImageView.center = point;
+        [self.delegate steeringWheel:self direction:0 velocity:0];
         return;
     }
     if (distance > self.frame.size.height/2-buttonRadius){
@@ -91,11 +92,19 @@ NSString *const steetingWheelCenterImage = @"DiscCenter";
     }else{
         centerImageView.center = point;
     }
-    [self.delegate steeringWheel:self direction:[Math radianOfVector:CGPointMake(point.x-wheelCenter.x, point.y-wheelCenter.y)]];
+    [self.delegate steeringWheel:self direction:[Math radianOfVector:CGPointMake(point.x-wheelCenter.x, point.y-wheelCenter.y)] velocity:NAN];
 }
 
 - (void)touchView:(TouchView *)view touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    centerImageView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    CGFloat distance = [Math distanceOfPiont:point otherPoint:wheelCenter];
+    NSTimeInterval time = distance/(self.frame.size.height/2-buttonRadius)*0.2;
+    [UIView animateWithDuration:time animations:^{
+        centerImageView.center = wheelCenter;
+    }completion:^(BOOL finished){
+        
+    }];
     [self.delegate endControlSteeringwheel:self];
     
 }

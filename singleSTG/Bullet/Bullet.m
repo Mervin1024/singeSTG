@@ -243,15 +243,15 @@
         return NO;
     }
     // 碰撞检测
-    Airframe *object;
     if ([self.delegate respondsToSelector:@selector(objectWillCollidedWithBullet:)]) {
-        object = [self.delegate objectWillCollidedWithBullet:self];
+        Airframe *object = [self.delegate objectWillCollidedWithBullet:self];
+        if ([self isCollidedWithObject:object]) {
+            self.moveEnable = NO;
+            [self removeFromSuperview];
+            return NO;
+        }
     }
-    if ([self isCollidedWithObject:object]) {
-        self.moveEnable = NO;
-        [self removeFromSuperview];
-        return NO;
-    }
+    
     return YES;
 }
 

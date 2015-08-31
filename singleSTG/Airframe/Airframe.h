@@ -41,7 +41,7 @@
 
 - (Airframe *)objectWillCollidedWithAirframe:(Airframe *)airframe;
 // 碰撞时方法回调
-- (void)airframe:(Airframe *)airframe didCollidedWithAirframe:(id)object;
+- (void)airframe:(Airframe *)airframe didCollidedWithAirframe:(Airframe *)object;
 // 跃出屏幕时方法回调
 - (void)airframe:(Airframe *)airframe didOverScreenWithCenter:(CGPoint)center;
 
