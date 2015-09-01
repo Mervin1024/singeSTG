@@ -27,6 +27,8 @@
     if ([self.delegate respondsToSelector:@selector(touchView:touchesMoved:withEvent:)]) {
         [self.delegate touchView:self touchesMoved:touches withEvent:event];
     }
+    
+//    CGPoint transP = self 
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{

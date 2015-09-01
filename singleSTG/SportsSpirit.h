@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SportsSpirit : UIImageView
+@interface SportsSpirit : UIView
 
 @property (assign, nonatomic) double forwardAngle; // 单位：弧度
 @property (assign, nonatomic) CGFloat velocity;
 @property (assign, nonatomic) BOOL moveEnable; // 默认 YES
+
+@property (strong, nonatomic) UIImage *image;
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image;
 

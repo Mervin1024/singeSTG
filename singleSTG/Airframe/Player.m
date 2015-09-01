@@ -20,7 +20,7 @@
 @implementation Player
 @synthesize touchView;
 CGFloat const airframePlayerRadius = 5.0;
-double const inclinedAngle = M_PI/16;
+double const inclinedAngle = M_PI/8;
 NSString *const airframePlayerImageName = @"Kijin Seija"; // 鬼人 正邪
 
 - (instancetype)initWithCenter:(CGPoint)center superViewController:(UIViewController *)superViewController{
@@ -48,38 +48,34 @@ NSString *const airframePlayerImageName = @"Kijin Seija"; // 鬼人 正邪
 }
 
 - (void)setInclinedDirection:(InclinedDirection)inclined{
+    CATransform3D transform3D = CATransform3DIdentity;
+    transform3D.m34 = -1/50.0;
     switch (inclined) {
         case InclinedDirectionLeft:{
-            if (inclinedDirection == InclinedDirectionNormal) {
-                self.transform = CGAffineTransformRotate(self.transform, -inclinedAngle);
-            }else if (inclinedDirection == InclinedDirectionRight){
-                self.transform = CGAffineTransformRotate(self.transform, -inclinedAngle*2);
-            }else{
-                return;
+            if (inclinedDirection != InclinedDirectionLeft) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.layer.transform = CATransform3DRotate(transform3D, -inclinedAngle, 0, 1, 0);
+                }completion:nil];
+                inclinedDirection = InclinedDirectionLeft;
             }
-            inclinedDirection = InclinedDirectionLeft;
             break;
         }
         case InclinedDirectionRight:{
-            if (inclinedDirection == InclinedDirectionNormal) {
-                self.transform = CGAffineTransformRotate(self.transform, inclinedAngle);
-            }else if (inclinedDirection == InclinedDirectionLeft){
-                self.transform = CGAffineTransformRotate(self.transform, inclinedAngle*2);
-            }else{
-                return;
+            if (inclinedDirection != InclinedDirectionRight) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.layer.transform = CATransform3DRotate(transform3D, inclinedAngle, 0, 1, 0);
+                }completion:nil];
+                inclinedDirection = InclinedDirectionRight;
             }
-            inclinedDirection = InclinedDirectionRight;
             break;
         }
         case InclinedDirectionNormal:{
-            if (inclinedDirection == InclinedDirectionLeft) {
-                self.transform = CGAffineTransformRotate(self.transform, inclinedAngle);
-            }else if (inclinedDirection == InclinedDirectionRight){
-                self.transform = CGAffineTransformRotate(self.transform, -inclinedAngle);
-            }else{
-                return;
+            if (inclinedDirection != InclinedDirectionNormal) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.layer.transform = transform3D;
+                }completion:nil];
+                inclinedDirection = InclinedDirectionNormal;
             }
-            inclinedDirection = InclinedDirectionNormal;
             break;
         }
     }

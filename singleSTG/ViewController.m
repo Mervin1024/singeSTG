@@ -20,6 +20,8 @@
     BOOL gameStart;
     BOOL pause;
     id enemy;
+    
+//    UIView *view;
 }
 
 @end
@@ -31,7 +33,6 @@
     
     [self initEnemy];
     [self initPlayer];
-//    [self initButton];
     [self initOperationView];
     [self initOptionView];
     
@@ -50,6 +51,10 @@
     [super viewWillAppear:animated];
 //    [self gameEnd];
 //    [self gameStart];
+    
+//    view = [[UIView alloc]initWithFrame:CGRectMake(150, 150, 150, 150)];
+//    view.backgroundColor = [UIColor orangeColor];
+//    [self.view addSubview:view];
 }
 
 - (void)initEnemy{
@@ -226,12 +231,16 @@
     }else{
         player.velocity = velocity;
     }
-    
+//    CATransform3D transform3D = CATransform3DIdentity;
+//    transform3D.m34 = -1/1000.0;
+//    view.layer.transform = CATransform3DRotate(transform3D, angle, 0, 1, 0);
 }
 
 - (void)endControlSteeringwheel:(SteeringWheel *)steeringWheel{
     player.forwardAngle = 0;
     player.velocity = 0;
     player.moveEnable = NO;
+    
+//    view.layer.transform = CATransform3DIdentity;
 }
 @end

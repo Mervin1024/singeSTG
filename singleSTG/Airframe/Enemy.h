@@ -10,4 +10,6 @@
 
 @interface Enemy : Airframe
 
+@property (assign, nonatomic) double healthPoint;
+
 @end
