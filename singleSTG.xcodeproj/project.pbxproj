@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EE0A24361B94127F00FF0ADA /* Math.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0A24351B94127F00FF0ADA /* Math.m */; };
-		EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */; };
 		EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738911B8DA19B0060CD36 /* SportsSpirit.m */; };
 		EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389A1B8DAE1D0060CD36 /* Airframe.m */; };
 		EEE738A01B8DAE1D0060CD36 /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7389C1B8DAE1D0060CD36 /* Enemy.m */; };
@@ -16,6 +15,8 @@
 		EEE738A61B8DCC8E0060CD36 /* TouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE738A31B8DBF750060CD36 /* TouchView.m */; };
 		EEE9E2991B902193000CE2E1 /* OptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE9E2981B902193000CE2E1 /* OptionView.m */; };
 		EEE9E29E1B90483C000CE2E1 /* Boss.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE9E29D1B90483C000CE2E1 /* Boss.m */; };
+		EEEBEEC61B954B5900F1B7E1 /* FirstWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEBEEC51B954B5900F1B7E1 /* FirstWeek.m */; };
+		EEEBEEC91B954BBE00F1B7E1 /* STGScreening.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEBEEC81B954BBE00F1B7E1 /* STGScreening.m */; };
 		EEEC183F1B8C063E00D8A99D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC183E1B8C063E00D8A99D /* main.m */; };
 		EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18411B8C063E00D8A99D /* AppDelegate.m */; };
 		EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18441B8C063E00D8A99D /* ViewController.m */; };
@@ -24,7 +25,6 @@
 		EEEC184D1B8C063E00D8A99D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC184B1B8C063E00D8A99D /* LaunchScreen.xib */; };
 		EEEC18591B8C063F00D8A99D /* singleSTGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18581B8C063F00D8A99D /* singleSTGTests.m */; };
 		EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC18671B8C0ADC00D8A99D /* Bullet.m */; };
-		EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC186E1B8C54D500D8A99D /* Barrage.m */; };
 		EEF0A7031B8EBEE2001A7418 /* OperationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF0A7021B8EBEE2001A7418 /* OperationView.m */; };
 		EEF0A7061B8EBF81001A7418 /* SteeringWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF0A7051B8EBF81001A7418 /* SteeringWheel.m */; };
 /* End PBXBuildFile section */
@@ -42,8 +42,6 @@
 /* Begin PBXFileReference section */
 		EE0A24341B94127F00FF0ADA /* Math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math.h; path = Uikt/Math.h; sourceTree = "<group>"; };
 		EE0A24351B94127F00FF0ADA /* Math.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Math.m; path = Uikt/Math.m; sourceTree = "<group>"; };
-		EEE7388A1B8D86FC0060CD36 /* FirstWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstWeek.h; path = Barrage/FirstWeek.h; sourceTree = "<group>"; };
-		EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstWeek.m; path = Barrage/FirstWeek.m; sourceTree = "<group>"; };
 		EEE738901B8DA19B0060CD36 /* SportsSpirit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportsSpirit.h; sourceTree = "<group>"; };
 		EEE738911B8DA19B0060CD36 /* SportsSpirit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportsSpirit.m; sourceTree = "<group>"; };
 		EEE738991B8DAE1D0060CD36 /* Airframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Airframe.h; path = Airframe/Airframe.h; sourceTree = "<group>"; };
@@ -58,6 +56,10 @@
 		EEE9E2981B902193000CE2E1 /* OptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionView.m; path = View/OptionView.m; sourceTree = "<group>"; };
 		EEE9E29C1B90483C000CE2E1 /* Boss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Boss.h; sourceTree = "<group>"; };
 		EEE9E29D1B90483C000CE2E1 /* Boss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Boss.m; sourceTree = "<group>"; };
+		EEEBEEC41B954B5900F1B7E1 /* FirstWeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstWeek.h; path = Script/FirstWeek.h; sourceTree = "<group>"; };
+		EEEBEEC51B954B5900F1B7E1 /* FirstWeek.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstWeek.m; path = Script/FirstWeek.m; sourceTree = "<group>"; };
+		EEEBEEC71B954BBE00F1B7E1 /* STGScreening.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STGScreening.h; path = Script/STGScreening.h; sourceTree = "<group>"; };
+		EEEBEEC81B954BBE00F1B7E1 /* STGScreening.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STGScreening.m; path = Script/STGScreening.m; sourceTree = "<group>"; };
 		EEEC18391B8C063E00D8A99D /* singleSTG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = singleSTG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEC183D1B8C063E00D8A99D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEC183E1B8C063E00D8A99D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -73,8 +75,6 @@
 		EEEC18581B8C063F00D8A99D /* singleSTGTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = singleSTGTests.m; sourceTree = "<group>"; };
 		EEEC18661B8C0ADC00D8A99D /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Bullet/Bullet.h; sourceTree = "<group>"; };
 		EEEC18671B8C0ADC00D8A99D /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Bullet/Bullet.m; sourceTree = "<group>"; };
-		EEEC186D1B8C54D500D8A99D /* Barrage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Barrage.h; path = Barrage/Barrage.h; sourceTree = "<group>"; };
-		EEEC186E1B8C54D500D8A99D /* Barrage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Barrage.m; path = Barrage/Barrage.m; sourceTree = "<group>"; };
 		EEF0A7011B8EBEE2001A7418 /* OperationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperationView.h; sourceTree = "<group>"; };
 		EEF0A7021B8EBEE2001A7418 /* OperationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperationView.m; sourceTree = "<group>"; };
 		EEF0A7041B8EBF81001A7418 /* SteeringWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SteeringWheel.h; sourceTree = "<group>"; };
@@ -213,23 +213,23 @@
 		EEEC18691B8C23C800D8A99D /* Airframe */ = {
 			isa = PBXGroup;
 			children = (
-				EEE9E29B1B904814000CE2E1 /* Player */,
-				EEE9E29A1B90480D000CE2E1 /* Enemy */,
 				EEE738991B8DAE1D0060CD36 /* Airframe.h */,
 				EEE7389A1B8DAE1D0060CD36 /* Airframe.m */,
+				EEE9E29B1B904814000CE2E1 /* Player */,
+				EEE9E29A1B90480D000CE2E1 /* Enemy */,
 			);
 			name = Airframe;
 			sourceTree = "<group>";
 		};
-		EEEC18701B8C54DB00D8A99D /* Barrage */ = {
+		EEEC18701B8C54DB00D8A99D /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				EEEC186D1B8C54D500D8A99D /* Barrage.h */,
-				EEEC186E1B8C54D500D8A99D /* Barrage.m */,
-				EEE7388A1B8D86FC0060CD36 /* FirstWeek.h */,
-				EEE7388B1B8D86FC0060CD36 /* FirstWeek.m */,
+				EEEBEEC41B954B5900F1B7E1 /* FirstWeek.h */,
+				EEEBEEC51B954B5900F1B7E1 /* FirstWeek.m */,
+				EEEBEEC71B954BBE00F1B7E1 /* STGScreening.h */,
+				EEEBEEC81B954BBE00F1B7E1 /* STGScreening.m */,
 			);
-			name = Barrage;
+			name = Script;
 			sourceTree = "<group>";
 		};
 		EEF0A7071B8EE3FE001A7418 /* SportsSpirit */ = {
@@ -249,7 +249,7 @@
 				EEE738A21B8DBF750060CD36 /* TouchView.h */,
 				EEE738A31B8DBF750060CD36 /* TouchView.m */,
 				EEE9E2961B902113000CE2E1 /* OperationView */,
-				EEEC18701B8C54DB00D8A99D /* Barrage */,
+				EEEC18701B8C54DB00D8A99D /* Script */,
 				EEE9E2971B902193000CE2E1 /* OptionView.h */,
 				EEE9E2981B902193000CE2E1 /* OptionView.m */,
 			);
@@ -358,18 +358,18 @@
 			files = (
 				EEE9E29E1B90483C000CE2E1 /* Boss.m in Sources */,
 				EEE738A61B8DCC8E0060CD36 /* TouchView.m in Sources */,
+				EEEBEEC61B954B5900F1B7E1 /* FirstWeek.m in Sources */,
 				EEE738A01B8DAE1D0060CD36 /* Enemy.m in Sources */,
 				EEF0A7061B8EBF81001A7418 /* SteeringWheel.m in Sources */,
+				EEEBEEC91B954BBE00F1B7E1 /* STGScreening.m in Sources */,
 				EEF0A7031B8EBEE2001A7418 /* OperationView.m in Sources */,
 				EEEC18451B8C063E00D8A99D /* ViewController.m in Sources */,
 				EEE738A11B8DAE1D0060CD36 /* Player.m in Sources */,
 				EEEC18681B8C0ADC00D8A99D /* Bullet.m in Sources */,
 				EEEC18421B8C063E00D8A99D /* AppDelegate.m in Sources */,
 				EEEC183F1B8C063E00D8A99D /* main.m in Sources */,
-				EEEC186F1B8C54D500D8A99D /* Barrage.m in Sources */,
 				EE0A24361B94127F00FF0ADA /* Math.m in Sources */,
 				EEE738921B8DA19B0060CD36 /* SportsSpirit.m in Sources */,
-				EEE7388C1B8D86FC0060CD36 /* FirstWeek.m in Sources */,
 				EEE7389F1B8DAE1D0060CD36 /* Airframe.m in Sources */,
 				EEE9E2991B902193000CE2E1 /* OptionView.m in Sources */,
 			);
