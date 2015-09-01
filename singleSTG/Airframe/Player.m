@@ -7,11 +7,10 @@
 //
 
 #import "Player.h"
-#import "TouchView.h"
 #import "OperationView.h"
 
 @interface Player () <TouchViewDelegate>{
-    TouchView *touchView;
+    
     id superController;
     InclinedDirection inclinedDirection;
 }
@@ -19,9 +18,10 @@
 @end
 
 @implementation Player
+@synthesize touchView;
 CGFloat const airframePlayerRadius = 5.0;
 double const inclinedAngle = M_PI/16;
-NSString *const airframePlayerImageName = @"Hakurei Reimu";
+NSString *const airframePlayerImageName = @"Kijin Seija"; // 鬼人 正邪
 
 - (instancetype)initWithCenter:(CGPoint)center superViewController:(UIViewController *)superViewController{
     self = [super initWithCenter:center

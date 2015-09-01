@@ -35,7 +35,7 @@
             break;
         }
         case BulletShapeTypeEllipse:{
-            ellipseBullet = [[BulletEllipse alloc]init];
+            ellipseBullet = [[BulletEllipse alloc]initWithBulletEllipseColor:BulletEllipseColorGreen];
             CGFloat majorAxis = ellipseBullet.majorAxis+4;
             CGFloat shortAxis = ellipseBullet.shortAxis+4;
             frame = CGRectMake(center.x-majorAxis/2, center.y-shortAxis/2, majorAxis, shortAxis);
@@ -279,14 +279,24 @@ NSString *const smallJadeImage = @"SmallJade";
 @implementation BulletEllipse
 CGFloat const EllipseMajorAxis = 11.5;
 CGFloat const EllipseShortAxis = 6.5;
-NSString *const EllipseImage = @"Ellipse";
+NSString *const EllipseImageBlue = @"Ellipse_Blue";
+NSString *const EllipseImageGreen = @"Ellipse_Green";
 
-- (instancetype)init{
+- (instancetype)initWithBulletEllipseColor:(BulletEllipseColor)ellipseColor{
     self = [super init];
     if (self) {
         _majorAxis = EllipseMajorAxis;
         _shortAxis = EllipseShortAxis;
-        _bulletImage = [UIImage imageNamed:EllipseImage];
+        _bulletEllipseColor = ellipseColor;
+        switch (ellipseColor) {
+            case BulletEllipseColorBlue:
+                _bulletImage = [UIImage imageNamed:EllipseImageBlue];
+                break;
+            case BulletEllipseColorGreen:
+                _bulletImage = [UIImage imageNamed:EllipseImageGreen];
+                break;
+        }
+        
     }
     return self;
 }

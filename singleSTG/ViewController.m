@@ -91,7 +91,8 @@
     OptionCell *cell = optionView.allOptionCells[0];
     cell.enabled = YES;
     [cell setBackgroundColor:[UIColor whiteColor]];
-    player.center = CGPointMake(self.view.center.x, 400);
+    [player.touchView.subviews  makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    player.center = CGPointMake(self.view.center.x, self.view.frame.size.height-OPERATION_VIEW_HIGHT-80);
     player.hidden = NO;
     [self coutinue];
     
@@ -143,6 +144,7 @@
         player.slow = NO;
         operationView.slowButton.isChecked = NO;
     }
+    
 }
 
 - (void)checkedPauseButton{

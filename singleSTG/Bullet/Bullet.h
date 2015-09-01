@@ -83,14 +83,22 @@ typedef NS_ENUM(NSUInteger, BulletSource) {
 //---------------------------
 
 #pragma mark - BulletEllipse
+typedef NS_ENUM(NSInteger, BulletEllipseColor) {
+    BulletEllipseColorBlue,
+    BulletEllipseColorGreen,
+};
+
 @interface BulletEllipse : NSObject
 
 @property (assign, nonatomic, readonly) CGFloat majorAxis; // 长轴 2a
 @property (assign, nonatomic, readonly) CGFloat shortAxis; // 短轴 2b
 @property (strong, nonatomic, readonly) UIImage *bulletImage;
+@property (assign, nonatomic, readonly) BulletEllipseColor bulletEllipseColor;
+
+- (instancetype)initWithBulletEllipseColor:(BulletEllipseColor)ellipseColor;
 
 @end
-
+#pragma mark - BulletKIJINSEIJA
 typedef NS_ENUM(NSInteger, BulletKIJINSEIJAType) {
     BulletKIJINSEIJATypeMini,
     BulletKIJINSEIJATypeNormal,

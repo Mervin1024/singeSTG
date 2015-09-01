@@ -8,6 +8,7 @@
 
 #import "Airframe.h"
 #import "Bullet.h"
+#import "TouchView.h"
 
 typedef NS_ENUM(NSInteger, InclinedDirection) {
     InclinedDirectionLeft,
@@ -16,6 +17,8 @@ typedef NS_ENUM(NSInteger, InclinedDirection) {
 };
 
 @interface Player : Airframe
+
+@property (strong, nonatomic) TouchView *touchView;
 
 @property (assign, nonatomic, readonly) BOOL shooting;
 @property (assign, nonatomic) BOOL slow;
