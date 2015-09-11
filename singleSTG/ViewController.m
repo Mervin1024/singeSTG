@@ -208,7 +208,7 @@
 }
 
 - (void)bullet:(Bullet *)bullet didCollidedWithAirframe:(Airframe *)object{
-    
+    // 暂时一对一，还不能一对多
 }
 
 - (void)bullet:(Bullet *)bullet didOverScreenWithCenter:(CGPoint)center{
